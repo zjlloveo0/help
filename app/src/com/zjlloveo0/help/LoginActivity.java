@@ -3,7 +3,9 @@ package com.zjlloveo0.help;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 
 import android.os.AsyncTask;
@@ -18,6 +20,7 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.netease.nimlib.sdk.NIMClient;
 import com.netease.nimlib.sdk.RequestCallback;
@@ -34,7 +37,7 @@ public class LoginActivity extends AppCompatActivity {
      * Keep track of the login task to ensure we can cancel it if requested.
      */
     private UserLoginTask mAuthTask = null;
-
+    private int nimLoginRe;//默认0 成功1 密码错误2 异常3
     // UI references.
     private EditText mAccountView;
     private EditText mPasswordView;
@@ -47,9 +50,11 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         // Set up the login form.
+        mLoginFormView = findViewById(R.id.login_form);
+        mProgressView = findViewById(R.id.login_progress);
         mAccountView = (EditText) findViewById(R.id.et_account);
         mPasswordView = (EditText) findViewById(R.id.password);
-
+        readLoginInfo();
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
@@ -61,43 +66,14 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        Button mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
-        mEmailSignInButton.setOnClickListener(new OnClickListener() {
+        Button mAccountSignInButton = (Button) findViewById(R.id.account_sign_in_button);
+        mAccountSignInButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
                 attemptLogin();
-                startActivity(new Intent(LoginActivity.this,MainActivity.class));
             }
         });
-
-        mLoginFormView = findViewById(R.id.login_form);
-        mProgressView = findViewById(R.id.login_progress);
     }
-
-    public void doLogin() {
-        LoginInfo info = new LoginInfo("zjlloveo0","111111"); // config...
-        RequestCallback<LoginInfo> callback =
-                new RequestCallback<LoginInfo>() {
-                    @Override
-                    public void onSuccess(LoginInfo loginInfo) {
-
-                    }
-
-                    @Override
-                    public void onFailed(int i) {
-
-                    }
-
-                    @Override
-                    public void onException(Throwable throwable) {
-
-                    }
-                    // 可以在此保存LoginInfo到本地，下次启动APP做自动登录用
-                };
-        NIMClient.getService(AuthService.class).login(info)
-                .setCallback(callback);
-    }
-
     /**
      * Attempts to sign in or register the account specified by the login form.
      * If there are form errors (invalid email, missing fields, etc.), the
@@ -108,56 +84,49 @@ public class LoginActivity extends AppCompatActivity {
             return;
         }
 
-        // Reset errors.
         mAccountView.setError(null);
         mPasswordView.setError(null);
 
-        // Store values at the time of the login attempt.
-        String email = mAccountView.getText().toString();
+        String account = mAccountView.getText().toString();
         String password = mPasswordView.getText().toString();
 
         boolean cancel = false;
         View focusView = null;
 
-        // Check for a valid password, if the user entered one.
         if (!TextUtils.isEmpty(password) && !isPasswordValid(password)) {
             mPasswordView.setError(getString(R.string.error_invalid_password));
             focusView = mPasswordView;
             cancel = true;
         }
 
-        // Check for a valid email address.
-        if (TextUtils.isEmpty(email)) {
+        if (TextUtils.isEmpty(account)) {
             mAccountView.setError(getString(R.string.error_field_required));
             focusView = mAccountView;
             cancel = true;
-        } else if (!isEmailValid(email)) {
-            mAccountView.setError(getString(R.string.error_invalid_email));
+        } else if (!isAccountValid(account)) {
+            mAccountView.setError(getString(R.string.error_invalid_account));
             focusView = mAccountView;
             cancel = true;
         }
 
         if (cancel) {
-            // There was an error; don't attempt login and focus the first
-            // form field with an error.
             focusView.requestFocus();
         } else {
-            // Show a progress spinner, and kick off a background task to
-            // perform the user login attempt.
             showProgress(true);
-            mAuthTask = new UserLoginTask(email, password);
+            mAuthTask = new UserLoginTask(account, password);
             mAuthTask.execute((Void) null);
         }
     }
 
-    private boolean isEmailValid(String email) {
+    private boolean isAccountValid(String account) {
         //TODO: Replace this with your own logic
-        return email.contains("@");
+//        return account.length()==11;
+        return true;
     }
 
     private boolean isPasswordValid(String password) {
         //TODO: Replace this with your own logic
-        return password.length() > 4;
+        return password.length() >= 6;
     }
 
     /**
@@ -196,76 +165,83 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-//    @Override
-//    public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
-//        return new CursorLoader(this,
-//                // Retrieve data rows for the device user's 'profile' contact.
-//                Uri.withAppendedPath(ContactsContract.Profile.CONTENT_URI,
-//                        ContactsContract.Contacts.Data.CONTENT_DIRECTORY), ProfileQuery.PROJECTION,
-//
-//                // Select only email addresses.
-//                ContactsContract.Contacts.Data.MIMETYPE +
-//                        " = ?", new String[]{ContactsContract.CommonDataKinds.Email
-//                .CONTENT_ITEM_TYPE},
-//
-//                // Show primary email addresses first. Note that there won't be
-//                // a primary email address if the user hasn't specified one.
-//                ContactsContract.Contacts.Data.IS_PRIMARY + " DESC");
-//    }
-
-//    @Override
-//    public void onLoadFinished(Loader<Cursor> cursorLoader, Cursor cursor) {
-//        List<String> emails = new ArrayList<>();
-//        cursor.moveToFirst();
-//        while (!cursor.isAfterLast()) {
-//            emails.add(cursor.getString(ProfileQuery.ADDRESS));
-//            cursor.moveToNext();
-//        }
-//
-//        addEmailsToAutoComplete(emails);
-//    }
-
-//    @Override
-//    public void onLoaderReset(Loader<Cursor> cursorLoader) {
-//
-//    }
-
-
     /**
      * Represents an asynchronous login/registration task used to authenticate
      * the user.
      */
     public class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
 
-        private final String mEmail;
+        private final String mAccount;
         private final String mPassword;
 
-        UserLoginTask(String email, String password) {
-            mEmail = email;
+        UserLoginTask(String account, String password) {
+            mAccount = account;
             mPassword = password;
         }
-
+        public void showToast(final String s){
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    Toast.makeText(getApplicationContext(),s,Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
         @Override
         protected Boolean doInBackground(Void... params) {
-            // TODO: attempt authentication against a network service.
+            nimLoginRe=0;
+            LoginInfo info = new LoginInfo(mAccount,mPassword); // config...
 
+            RequestCallback<LoginInfo> callback =
+                    new RequestCallback<LoginInfo>() {
+                        @Override
+                        public void onSuccess(LoginInfo loginInfo) {
+                            saveLoginInfo(mAccount,mPassword,mPassword);
+                            nimLoginRe=1;
+                        }
+
+                        @Override
+                        public void onFailed(int i) {
+
+                            nimLoginRe=2;
+                        }
+
+                        @Override
+                        public void onException(Throwable throwable) {
+                            nimLoginRe=3;
+                        }
+                    };
+            NIMClient.getService(AuthService.class).login(info)
+                    .setCallback(callback);
             try {
-                // Simulate network access.
-                Thread.sleep(2000);
-            } catch (InterruptedException e) {
-                return false;
-            }
+                long startTime=System.currentTimeMillis();
 
-//            for (String credential : DUMMY_CREDENTIALS) {
+                while(nimLoginRe==0){
+                    Thread.sleep(1000);
+                    if(System.currentTimeMillis()-startTime>10000L){
+                        showToast(getString(R.string.internet_error));
+                        break;
+                    }
+                }
+            } catch (InterruptedException e) {
+                showToast(getString(R.string.system_error)+"(USERLOGINTASK)");
+                nimLoginRe = 3;
+            }
+            if(nimLoginRe==1){
+                showToast(getString(R.string.login_success));
+                startActivity(new Intent(LoginActivity.this,MainActivity.class));
+                return true;
+            }
+//          for (String credential : DUMMY_CREDENTIALS) {
 //                String[] pieces = credential.split(":");
-//                if (pieces[0].equals(mEmail)) {
+//                if (pieces[0].equals(mAccount)) {
 //                    // Account exists, return true if the password matches.
 //                    return pieces[1].equals(mPassword);
 //                }
 //            }
 
+
             // TODO: register the new account here.
-            return true;
+            return false;
         }
 
         @Override
@@ -285,6 +261,28 @@ public class LoginActivity extends AppCompatActivity {
         protected void onCancelled() {
             mAuthTask = null;
             showProgress(false);
+        }
+    }
+    private void saveLoginInfo(String account,String password, String token) {
+        SharedPreferences.Editor editor = getSharedPreferences("LoginInfo", Context.MODE_PRIVATE).edit();
+        editor.putString("account", account);
+        editor.putString("token", token);
+        editor.putString("password",password);
+        editor.commit();
+    }
+    private void readLoginInfo() {
+        SharedPreferences sp=getSharedPreferences("LoginInfo", Context.MODE_PRIVATE);
+        String account="";
+        String token="";
+        String password="";
+        if(sp!=null) {
+            account = sp.getString("account", "");
+            token = sp.getString("token", "");
+            password = sp.getString("password", "");
+        }
+        if(!("".equals(account)||"".equals(token)||"".equals(password))){
+            mAccountView.setText(account);
+            mPasswordView.setText(password);
         }
     }
 }
