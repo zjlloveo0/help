@@ -1,4 +1,4 @@
-package com.zjlloveo0.help;
+package com.zjlloveo0.help.activity;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -26,6 +26,7 @@ import com.netease.nimlib.sdk.NIMClient;
 import com.netease.nimlib.sdk.RequestCallback;
 import com.netease.nimlib.sdk.auth.AuthService;
 import com.netease.nimlib.sdk.auth.LoginInfo;
+import com.zjlloveo0.help.R;
 
 
 /**

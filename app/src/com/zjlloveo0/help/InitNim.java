@@ -11,6 +11,7 @@ import com.netease.nimlib.sdk.StatusBarNotificationConfig;
 import com.netease.nimlib.sdk.auth.LoginInfo;
 import com.netease.nimlib.sdk.msg.constant.SessionTypeEnum;
 import com.netease.nimlib.sdk.uinfo.UserInfoProvider;
+import com.zjlloveo0.help.activity.MainActivity;
 
 /**
  * Created by zjlloveo0 on 2017/3/6.

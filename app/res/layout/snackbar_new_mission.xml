@@ -9,7 +9,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:text="1111" />
+        android:text="@string/add_service" />
 
     <Button
         android:id="@+id/bt_add_mission"
@@ -17,5 +17,5 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:text="2222" />
+        android:text="@string/add_mission" />
 </LinearLayout>
