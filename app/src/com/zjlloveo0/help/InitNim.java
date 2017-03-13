@@ -1,6 +1,8 @@
 package com.zjlloveo0.help;
 
 import android.app.Application;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Environment;
@@ -31,7 +33,7 @@ public class InitNim extends Application {
         // 如果将新消息通知提醒托管给 SDK 完成，需要添加以下配置。否则无需设置。
         StatusBarNotificationConfig config = new StatusBarNotificationConfig();
         config.notificationEntrance = MainActivity.class; // 点击通知栏跳转到该Activity
-        config.notificationSmallIconId = R.drawable.ic_stat_notify_msg;
+        config.notificationSmallIconId = R.drawable.help_b;
         // 呼吸灯配置
         config.ledARGB = Color.GREEN;
         config.ledOnMs = 1000;
@@ -63,7 +65,7 @@ public class InitNim extends Application {
 
             @Override
             public int getDefaultIconResId() {
-                return R.drawable.avatar_def;
+                return R.drawable.help_a;
             }
 
             @Override
@@ -87,6 +89,19 @@ public class InitNim extends Application {
 
     // 如果已经存在用户登录信息，返回LoginInfo，否则返回null即可
     private LoginInfo loginInfo() {
+        SharedPreferences sp = getSharedPreferences("LoginInfo", Context.MODE_PRIVATE);
+        LoginInfo logininfo;
+        String account = "";
+        String token = "";
+        String password = "";
+        if (sp != null) {
+            account = sp.getString("account", "");
+            token = sp.getString("token", "");
+            password = sp.getString("password", "");
+        }
+        if (!("".equals(account) || "".equals(token) || "".equals(password))) {
+
+        }
         return null;
     }
 

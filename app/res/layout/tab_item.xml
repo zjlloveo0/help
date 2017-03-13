@@ -7,7 +7,7 @@
 
     <ImageView
         android:id="@+id/image"
-        android:src="@drawable/tab_report"
+        android:src="@drawable/tab_service"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 

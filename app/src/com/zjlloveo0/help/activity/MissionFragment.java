@@ -13,7 +13,7 @@ import com.zjlloveo0.help.R;
 /**
  * Created by donglinghao on 2016-01-28.
  */
-public class HomeFragment extends Fragment {
+public class MissionFragment extends Fragment {
 
     private View mRootView;
 
@@ -21,8 +21,8 @@ public class HomeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         if (mRootView == null) {
-            Log.e("666", "HomeFragment");
-            mRootView = inflater.inflate(R.layout.home_fragment, container, false);
+            Log.e("666", "MissionFragment");
+            mRootView = inflater.inflate(R.layout.mission_fragment, container, false);
         }
         ViewGroup parent = (ViewGroup) mRootView.getParent();
         if (parent != null) {

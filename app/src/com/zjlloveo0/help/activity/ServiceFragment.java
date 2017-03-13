@@ -13,7 +13,7 @@ import com.zjlloveo0.help.R;
 /**
  * Created by donglinghao on 2016-01-28.
  */
-public class ReportFragment extends Fragment {
+public class ServiceFragment extends Fragment {
 
     private View mRootView;
 
@@ -21,8 +21,8 @@ public class ReportFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         if (mRootView == null) {
-            Log.e("666", "ReportFragment");
-            mRootView = inflater.inflate(R.layout.report_fragment, container, false);
+            Log.e("666", "ServiceFragment");
+            mRootView = inflater.inflate(R.layout.service_fragment, container, false);
         }
         ViewGroup parent = (ViewGroup) mRootView.getParent();
         if (parent != null) {

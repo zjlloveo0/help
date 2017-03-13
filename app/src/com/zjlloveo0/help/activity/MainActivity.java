@@ -34,21 +34,22 @@ public class MainActivity extends AppCompatActivity {
     private FragmentTabHost mTabHost;
     private ViewPager mViewPager;
     private List<Fragment> mFragmentList;
-    private Class mClass[] = {HomeFragment.class, ReportFragment.class, MessageFragment.class, MineFragment.class};
-    private Fragment mFragment[] = {new HomeFragment(), new ReportFragment(), new MessageFragment(), new MineFragment()};
-    private String mTitles[] = {"首页", "报表", "消息", "我的"};
+    private Class mClass[] = {ServiceFragment.class, MissionFragment.class, MessageFragment.class, MineFragment.class};
+    private Fragment mFragment[] = {new ServiceFragment(), new MissionFragment(), new MessageFragment(), new MineFragment()};
+    private String mTitles[] = {"找服务", "去帮忙", "消息", "我的"};
     private int mImages[] = {
-            R.drawable.tab_home,
-            R.drawable.tab_report,
+            R.drawable.tab_service,
+            R.drawable.tab_mission,
             R.drawable.tab_message,
             R.drawable.tab_mine
     };
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+
         setSupportActionBar(toolbar);
         bt_add_service=(Button)findViewById(R.id.bt_add_service);
         bt_add_mission=(Button)findViewById(R.id.bt_add_mission);
@@ -58,11 +59,19 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 snackBar= Snackbar.make(view,"", Snackbar.LENGTH_LONG);
                 addViewToSnackBar(snackBar,R.layout.snackbar_new_mission,0);
+                setSnackBarColor(snackBar, Color.alpha(0));
                 snackBar.show();
             }
         });
 
         init();
+    }
+
+    public void setSnackBarColor(Snackbar snackbar, int backgroundColor) {
+        View view = snackbar.getView();
+        if (view != null) {
+            view.setBackgroundColor(backgroundColor);
+        }
     }
     public void addViewToSnackBar(Snackbar snackbar, int layoutId, int index) {
         View snackBarView = snackbar.getView();
@@ -95,7 +104,6 @@ public class MainActivity extends AppCompatActivity {
         mViewPager = (ViewPager) findViewById(R.id.view_pager);
 
         mFragmentList = new ArrayList<Fragment>();
-
         mTabHost.setup(this, getSupportFragmentManager(), android.R.id.tabcontent);
         mTabHost.getTabWidget().setDividerDrawable(null);
 
