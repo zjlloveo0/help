@@ -10,9 +10,6 @@ import android.view.ViewGroup;
 
 import com.zjlloveo0.help.R;
 
-/**
- * Created by donglinghao on 2016-01-28.
- */
 public class MineFragment extends Fragment {
 
     private View mRootView;

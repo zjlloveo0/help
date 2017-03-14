@@ -20,6 +20,13 @@ import android.widget.TabHost;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.netease.nimlib.sdk.NIMClient;
+import com.netease.nimlib.sdk.Observer;
+import com.netease.nimlib.sdk.msg.MessageBuilder;
+import com.netease.nimlib.sdk.msg.MsgService;
+import com.netease.nimlib.sdk.msg.MsgServiceObserve;
+import com.netease.nimlib.sdk.msg.constant.SessionTypeEnum;
+import com.netease.nimlib.sdk.msg.model.IMMessage;
 import com.zjlloveo0.help.R;
 
 import java.util.ArrayList;
@@ -65,8 +72,20 @@ public class MainActivity extends AppCompatActivity {
         });
 
         init();
+        test();
     }
 
+    public void test() {
+        Observer<List<IMMessage>> incomingMessageObserver =
+                new Observer<List<IMMessage>>() {
+                    @Override
+                    public void onEvent(List<IMMessage> messages) {
+                        Toast.makeText(getApplicationContext(), messages.get(0).getContent(), Toast.LENGTH_SHORT).show();
+                    }
+                };
+        NIMClient.getService(MsgServiceObserve.class)
+                .observeReceiveMessage(incomingMessageObserver, true);
+    }
     public void setSnackBarColor(Snackbar snackbar, int backgroundColor) {
         View view = snackbar.getView();
         if (view != null) {
@@ -90,6 +109,16 @@ public class MainActivity extends AppCompatActivity {
         Toast.makeText(getApplicationContext(),"2222",Toast.LENGTH_SHORT).show();
     }
 
+    public void sendMsg(View v) {
+        // 创建文本消息
+        IMMessage message = MessageBuilder.createTextMessage(
+                "zjlloveo0", // 聊天对象的 ID，如果是单聊，为用户帐号，如果是群聊，为群组 ID
+                SessionTypeEnum.P2P, // 聊天类型，单聊或群组
+                "你好！" // 文本内容
+        );
+        // 发送消息。如果需要关心发送结果，可设置回调函数。发送完成时，会收到回调。如果失败，会有具体的错误码。
+        NIMClient.getService(MsgService.class).sendMessage(message, false);
+    }
 
     //tab TODO:tab
     private void init() {
