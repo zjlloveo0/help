@@ -20,6 +20,7 @@ import android.widget.TabHost;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.netease.nim.uikit.recent.RecentContactsFragment;
 import com.netease.nimlib.sdk.NIMClient;
 import com.netease.nimlib.sdk.Observer;
 import com.netease.nimlib.sdk.msg.MessageBuilder;
@@ -41,8 +42,8 @@ public class MainActivity extends AppCompatActivity {
     private FragmentTabHost mTabHost;
     private ViewPager mViewPager;
     private List<Fragment> mFragmentList;
-    private Class mClass[] = {ServiceFragment.class, MissionFragment.class, MessageFragment.class, MineFragment.class};
-    private Fragment mFragment[] = {new ServiceFragment(), new MissionFragment(), new MessageFragment(), new MineFragment()};
+    private Class mClass[] = {ServiceFragment.class, MissionFragment.class, RecentContactsFragment.class, MineFragment.class};
+    private Fragment mFragment[] = {new ServiceFragment(), new MissionFragment(), new RecentContactsFragment(), new MineFragment()};
     private String mTitles[] = {"找服务", "去帮忙", "消息", "我的"};
     private int mImages[] = {
             R.drawable.tab_service,
@@ -131,6 +132,7 @@ public class MainActivity extends AppCompatActivity {
     private void initView() {
         mTabHost = (FragmentTabHost) findViewById(android.R.id.tabhost);
         mViewPager = (ViewPager) findViewById(R.id.view_pager);
+        mViewPager.setOffscreenPageLimit(4);
 
         mFragmentList = new ArrayList<Fragment>();
         mTabHost.setup(this, getSupportFragmentManager(), android.R.id.tabcontent);
@@ -192,6 +194,7 @@ public class MainActivity extends AppCompatActivity {
             public void onPageScrollStateChanged(int state) {
 
             }
+
         });
 
     }

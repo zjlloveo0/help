@@ -9,7 +9,7 @@
     <string name="title_activity_main">home</string>
     <string name="system_error">System Exception</string>
     <string name="prompt_password">Password</string>
-    <string name="prompt_account">Account</string>
+    <string name="prompt_account">PhoneNumber</string>
     <string name="login_success">Login Successful!</string>
     <string name="internet_error">Network timeout, please try again later!</string>
     <string name="error_invalid_password">Password at least 6!</string>
