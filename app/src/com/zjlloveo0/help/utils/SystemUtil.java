@@ -2,7 +2,17 @@ package com.zjlloveo0.help.utils;
 
 import android.app.ActivityManager;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.widget.Toast;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 /**
  * 系统工具箱
@@ -43,5 +53,4 @@ public class SystemUtil {
             }
         }
     }
-
 }

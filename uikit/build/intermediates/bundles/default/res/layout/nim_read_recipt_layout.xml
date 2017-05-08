@@ -9,4 +9,4 @@
     android:text="@string/readed"
     android:textColor="#666666"
     android:textSize="12sp"
-    android:visibility="gone"/>
+    android:visibility="gone" />

@@ -8,7 +8,7 @@
     android:gravity="center"
     android:orientation="horizontal"
     android:padding="10dip"
-    android:visibility="gone" >
+    android:visibility="gone">
 
     <com.netease.nim.uikit.common.ui.imageview.HeadImageView
         android:id="@+id/new_message_tip_head_image_view"

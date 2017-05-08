@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout android:id="@+id/emojiLayout"
-              xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:background="@android:color/white"
-              android:orientation="vertical"
-              android:visibility="visible">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/white"
+    android:orientation="vertical"
+    android:visibility="visible">
 
     <View
         android:id="@+id/top_divider_line"
         android:layout_height="2px"
         android:layout_width="match_parent"
         android:background="@color/color_gray_d9d9d9"
-        android:visibility="gone"/>
+        android:visibility="gone" />
 
     <android.support.v4.view.ViewPager
         android:id="@+id/scrPlugin"
@@ -21,7 +21,7 @@
         android:layout_marginBottom="4dp"
         android:layout_marginTop="4dp"
         android:overScrollMode="never"
-        android:scrollbars="none"/>
+        android:scrollbars="none" />
 
     <LinearLayout
         android:id="@+id/layout_scr_bottom"
@@ -31,7 +31,7 @@
         android:gravity="center"
         android:orientation="horizontal"></LinearLayout>
 
-    <View style="@style/horizontal_light_thin_divider"/>
+    <View style="@style/horizontal_light_thin_divider" />
 
     <LinearLayout
         android:layout_width="fill_parent"
@@ -50,8 +50,7 @@
                 android:id="@+id/emoj_tab_view"
                 android:layout_width="wrap_content"
                 android:layout_height="44dp"
-                android:orientation="horizontal">
-            </LinearLayout>
+                android:orientation="horizontal"></LinearLayout>
         </HorizontalScrollView>
     </LinearLayout>
 

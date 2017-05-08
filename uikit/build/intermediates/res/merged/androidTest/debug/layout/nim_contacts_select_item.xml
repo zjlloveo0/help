@@ -5,7 +5,7 @@
     android:layout_height="fill_parent"
     android:background="@drawable/nim_contact_list_item_selecter"
     android:minHeight="60dp"
-    android:orientation="vertical" >
+    android:orientation="vertical">
 
     <ImageView
         android:id="@+id/imgSelect"
@@ -32,7 +32,7 @@
         android:layout_marginLeft="10dip"
         android:layout_marginRight="20dip"
         android:layout_toRightOf="@+id/img_head"
-        android:gravity="center_vertical" >
+        android:gravity="center_vertical">
 
         <TextView
             android:id="@+id/tv_nickname"

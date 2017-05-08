@@ -18,6 +18,8 @@ import com.zjlloveo0.help.R;
 import com.zjlloveo0.help.activity.MainActivity;
 import com.zjlloveo0.help.utils.SystemUtil;
 
+import cn.smssdk.SMSSDK;
+
 /**
  * Created by zjlloveo0 on 2017/3/6.
  */

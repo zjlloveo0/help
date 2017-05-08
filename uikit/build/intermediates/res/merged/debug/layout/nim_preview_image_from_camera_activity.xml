@@ -25,24 +25,24 @@
     </android.support.design.widget.AppBarLayout>
 
     <ImageView
-            android:id="@+id/imageViewPreview"
-            android:layout_width="fill_parent"
-            android:layout_height="0dip"
-            android:layout_weight="1"
-            android:contentDescription="@string/empty" />
+        android:id="@+id/imageViewPreview"
+        android:layout_width="fill_parent"
+        android:layout_height="0dip"
+        android:layout_weight="1"
+        android:contentDescription="@string/empty" />
 
     <Button
-            android:layout_marginBottom="20dp"
-            android:id="@+id/buttonSend"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginLeft="10dip"
-            android:layout_marginRight="10dip"
-            android:background="@drawable/nim_message_button_bottom_send_selector"
-            android:gravity="center"
-            android:text="@string/send"
-            android:textColor="@color/white"
-            android:textSize="17sp" />
+        android:layout_marginBottom="20dp"
+        android:id="@+id/buttonSend"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginLeft="10dip"
+        android:layout_marginRight="10dip"
+        android:background="@drawable/nim_message_button_bottom_send_selector"
+        android:gravity="center"
+        android:text="@string/send"
+        android:textColor="@color/white"
+        android:textSize="17sp" />
 
 </LinearLayout>

@@ -5,7 +5,7 @@
     android:background="@drawable/nim_popup_menu_item_selector"
     android:minHeight="44dip"
     android:paddingLeft="10dip"
-    android:paddingRight="25dip" >
+    android:paddingRight="25dip">
 
     <ImageView
         android:id="@+id/popup_menu_icon"

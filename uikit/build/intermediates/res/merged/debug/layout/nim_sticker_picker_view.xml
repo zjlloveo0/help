@@ -23,7 +23,7 @@
             android:maxLines="1"
             android:ellipsize="end"
             android:gravity="center_horizontal"
-            android:scrollHorizontally="false"/>
+            android:scrollHorizontally="false" />
 
         <ImageView
             android:id="@+id/sticker_thumb_image"

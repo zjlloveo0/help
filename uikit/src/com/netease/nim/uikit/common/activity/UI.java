@@ -84,9 +84,9 @@ public abstract class UI extends AppCompatActivity {
         if (!TextUtils.isEmpty(options.titleString)) {
             toolbar.setTitle(options.titleString);
         }
-        if (options.logoId != 0) {
-            toolbar.setLogo(options.logoId);
-        }
+//        if (options.logoId != 0) {
+//            toolbar.setLogo(options.logoId);
+//        }
         setSupportActionBar(toolbar);
 
         if (options.isNeedNavigate) {

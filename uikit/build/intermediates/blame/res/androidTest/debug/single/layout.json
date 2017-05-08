@@ -56,10 +56,6 @@
         "source": "C:\\Users\\zjlloveo0\\.android\\build-cache\\812d1274e1b1604e3dcee5538b7f203b0b981213\\output\\res\\layout\\abc_action_bar_title_item.xml"
     },
     {
-        "merged": "D:\\Project\\Android\\help\\uikit\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\layout_snackbar.xml",
-        "source": "C:\\Users\\zjlloveo0\\.android\\build-cache\\0e48d5155fb7b3310dbc3d51c7ebcd6a8577f7ff\\output\\res\\layout\\layout_snackbar.xml"
-    },
-    {
         "merged": "D:\\Project\\Android\\help\\uikit\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\nim_team_name_activity.xml",
         "source": "D:\\Project\\Android\\help\\uikit\\build\\intermediates\\bundles\\debug\\res\\layout\\nim_team_name_activity.xml"
     },
@@ -118,10 +114,6 @@
     {
         "merged": "D:\\Project\\Android\\help\\uikit\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\nim_contact_loading_frame.xml",
         "source": "D:\\Project\\Android\\help\\uikit\\build\\intermediates\\bundles\\debug\\res\\layout\\nim_contact_loading_frame.xml"
-    },
-    {
-        "merged": "D:\\Project\\Android\\help\\uikit\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_simple_dropdown_hint.xml",
-        "source": "C:\\Users\\zjlloveo0\\.android\\build-cache\\1f41d629f2ff2a073c2916eb66174d552cf05002\\output\\res\\layout\\abc_simple_dropdown_hint.xml"
     },
     {
         "merged": "D:\\Project\\Android\\help\\uikit\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\nim_contacts_count_item.xml",
@@ -206,10 +198,6 @@
     {
         "merged": "D:\\Project\\Android\\help\\uikit\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\nim_easy_alert_dialog_with_listview.xml",
         "source": "D:\\Project\\Android\\help\\uikit\\build\\intermediates\\bundles\\debug\\res\\layout\\nim_easy_alert_dialog_with_listview.xml"
-    },
-    {
-        "merged": "D:\\Project\\Android\\help\\uikit\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\layout_snackbar_include.xml",
-        "source": "C:\\Users\\zjlloveo0\\.android\\build-cache\\0e48d5155fb7b3310dbc3d51c7ebcd6a8577f7ff\\output\\res\\layout\\layout_snackbar_include.xml"
     },
     {
         "merged": "D:\\Project\\Android\\help\\uikit\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\notification_template_part_chronometer.xml",
@@ -404,12 +392,12 @@
         "source": "C:\\Users\\zjlloveo0\\.android\\build-cache\\36aefe212a5a5b3b8152b45023c507fdc05e2379\\output\\res\\layout\\design_menu_item_action_area.xml"
     },
     {
-        "merged": "D:\\Project\\Android\\help\\uikit\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_action_mode_bar.xml",
-        "source": "C:\\Users\\zjlloveo0\\.android\\build-cache\\812d1274e1b1604e3dcee5538b7f203b0b981213\\output\\res\\layout\\abc_action_mode_bar.xml"
-    },
-    {
         "merged": "D:\\Project\\Android\\help\\uikit\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\nim_message_item_name_layout.xml",
         "source": "D:\\Project\\Android\\help\\uikit\\build\\intermediates\\bundles\\debug\\res\\layout\\nim_message_item_name_layout.xml"
+    },
+    {
+        "merged": "D:\\Project\\Android\\help\\uikit\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_action_mode_bar.xml",
+        "source": "C:\\Users\\zjlloveo0\\.android\\build-cache\\812d1274e1b1604e3dcee5538b7f203b0b981213\\output\\res\\layout\\abc_action_mode_bar.xml"
     },
     {
         "merged": "D:\\Project\\Android\\help\\uikit\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\nim_contacts_item.xml",

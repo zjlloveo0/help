@@ -1,11 +1,11 @@
 [
     {
-        "merged": "D:\\Project\\Android\\help\\uikit\\build\\intermediates\\res\\merged\\debug\\drawable\\nim_team_create_btn_selector.xml",
-        "source": "D:\\Project\\Android\\help\\uikit\\res\\drawable\\nim_team_create_btn_selector.xml"
-    },
-    {
         "merged": "D:\\Project\\Android\\help\\uikit\\build\\intermediates\\res\\merged\\debug\\drawable\\nim_message_plus_location_selector.xml",
         "source": "D:\\Project\\Android\\help\\uikit\\res\\drawable\\nim_message_plus_location_selector.xml"
+    },
+    {
+        "merged": "D:\\Project\\Android\\help\\uikit\\build\\intermediates\\res\\merged\\debug\\drawable\\nim_team_create_btn_selector.xml",
+        "source": "D:\\Project\\Android\\help\\uikit\\res\\drawable\\nim_team_create_btn_selector.xml"
     },
     {
         "merged": "D:\\Project\\Android\\help\\uikit\\build\\intermediates\\res\\merged\\debug\\drawable\\nim_recent_contact_sticky_selecter.xml",
@@ -168,10 +168,6 @@
         "source": "D:\\Project\\Android\\help\\uikit\\res\\drawable\\nim_cancel_record_red_bg.xml"
     },
     {
-        "merged": "D:\\Project\\Android\\help\\uikit\\build\\intermediates\\res\\merged\\debug\\drawable\\snackbar_background.xml",
-        "source": "C:\\Users\\zjlloveo0\\.android\\build-cache\\0e48d5155fb7b3310dbc3d51c7ebcd6a8577f7ff\\output\\res\\drawable\\snackbar_background.xml"
-    },
-    {
         "merged": "D:\\Project\\Android\\help\\uikit\\build\\intermediates\\res\\merged\\debug\\drawable\\list_item_bg_selecter.xml",
         "source": "D:\\Project\\Android\\help\\uikit\\res\\drawable\\list_item_bg_selecter.xml"
     },
@@ -310,10 +306,6 @@
     {
         "merged": "D:\\Project\\Android\\help\\uikit\\build\\intermediates\\res\\merged\\debug\\drawable\\nim_sticker_button_background_pressed_layer_list.xml",
         "source": "D:\\Project\\Android\\help\\uikit\\res\\drawable\\nim_sticker_button_background_pressed_layer_list.xml"
-    },
-    {
-        "merged": "D:\\Project\\Android\\help\\uikit\\build\\intermediates\\res\\merged\\debug\\drawable\\fab_background.xml",
-        "source": "C:\\Users\\zjlloveo0\\.android\\build-cache\\0e48d5155fb7b3310dbc3d51c7ebcd6a8577f7ff\\output\\res\\drawable\\fab_background.xml"
     },
     {
         "merged": "D:\\Project\\Android\\help\\uikit\\build\\intermediates\\res\\merged\\debug\\drawable\\nim_message_plus_video_selector.xml",

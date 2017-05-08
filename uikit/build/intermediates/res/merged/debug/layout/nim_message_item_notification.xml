@@ -12,6 +12,6 @@
         android:paddingLeft="7dip"
         android:paddingRight="7dip"
         android:textColor="#ffffff"
-        android:textSize="12sp"/>
+        android:textSize="12sp" />
 
 </merge>

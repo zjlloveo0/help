@@ -4,10 +4,6 @@
         "source": "C:\\Users\\zjlloveo0\\.android\\build-cache\\812d1274e1b1604e3dcee5538b7f203b0b981213\\output\\res\\anim\\abc_fade_in.xml"
     },
     {
-        "merged": "D:\\Project\\Android\\help\\uikit\\build\\intermediates\\res\\merged\\androidTest\\debug\\anim\\fab_out.xml",
-        "source": "C:\\Users\\zjlloveo0\\.android\\build-cache\\0e48d5155fb7b3310dbc3d51c7ebcd6a8577f7ff\\output\\res\\anim\\fab_out.xml"
-    },
-    {
         "merged": "D:\\Project\\Android\\help\\uikit\\build\\intermediates\\res\\merged\\androidTest\\debug\\anim\\design_fab_in.xml",
         "source": "C:\\Users\\zjlloveo0\\.android\\build-cache\\36aefe212a5a5b3b8152b45023c507fdc05e2379\\output\\res\\anim\\design_fab_in.xml"
     },
@@ -24,16 +20,8 @@
         "source": "C:\\Users\\zjlloveo0\\.android\\build-cache\\812d1274e1b1604e3dcee5538b7f203b0b981213\\output\\res\\anim\\abc_slide_out_top.xml"
     },
     {
-        "merged": "D:\\Project\\Android\\help\\uikit\\build\\intermediates\\res\\merged\\androidTest\\debug\\anim\\fab_in.xml",
-        "source": "C:\\Users\\zjlloveo0\\.android\\build-cache\\0e48d5155fb7b3310dbc3d51c7ebcd6a8577f7ff\\output\\res\\anim\\fab_in.xml"
-    },
-    {
         "merged": "D:\\Project\\Android\\help\\uikit\\build\\intermediates\\res\\merged\\androidTest\\debug\\anim\\abc_slide_in_bottom.xml",
         "source": "C:\\Users\\zjlloveo0\\.android\\build-cache\\812d1274e1b1604e3dcee5538b7f203b0b981213\\output\\res\\anim\\abc_slide_in_bottom.xml"
-    },
-    {
-        "merged": "D:\\Project\\Android\\help\\uikit\\build\\intermediates\\res\\merged\\androidTest\\debug\\anim\\snackbar_out.xml",
-        "source": "C:\\Users\\zjlloveo0\\.android\\build-cache\\0e48d5155fb7b3310dbc3d51c7ebcd6a8577f7ff\\output\\res\\anim\\snackbar_out.xml"
     },
     {
         "merged": "D:\\Project\\Android\\help\\uikit\\build\\intermediates\\res\\merged\\androidTest\\debug\\anim\\abc_slide_out_bottom.xml",
@@ -74,9 +62,5 @@
     {
         "merged": "D:\\Project\\Android\\help\\uikit\\build\\intermediates\\res\\merged\\androidTest\\debug\\anim\\design_snackbar_in.xml",
         "source": "C:\\Users\\zjlloveo0\\.android\\build-cache\\36aefe212a5a5b3b8152b45023c507fdc05e2379\\output\\res\\anim\\design_snackbar_in.xml"
-    },
-    {
-        "merged": "D:\\Project\\Android\\help\\uikit\\build\\intermediates\\res\\merged\\androidTest\\debug\\anim\\snackbar_in.xml",
-        "source": "C:\\Users\\zjlloveo0\\.android\\build-cache\\0e48d5155fb7b3310dbc3d51c7ebcd6a8577f7ff\\output\\res\\anim\\snackbar_in.xml"
     }
 ]

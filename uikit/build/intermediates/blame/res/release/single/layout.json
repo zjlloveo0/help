@@ -100,12 +100,12 @@
         "source": "D:\\Project\\Android\\help\\uikit\\res\\layout\\nim_contact_loading_frame.xml"
     },
     {
-        "merged": "D:\\Project\\Android\\help\\uikit\\build\\intermediates\\res\\merged\\release\\layout\\nim_menu_dialog.xml",
-        "source": "D:\\Project\\Android\\help\\uikit\\res\\layout\\nim_menu_dialog.xml"
-    },
-    {
         "merged": "D:\\Project\\Android\\help\\uikit\\build\\intermediates\\res\\merged\\release\\layout\\nim_action_bar_custom_view.xml",
         "source": "D:\\Project\\Android\\help\\uikit\\res\\layout\\nim_action_bar_custom_view.xml"
+    },
+    {
+        "merged": "D:\\Project\\Android\\help\\uikit\\build\\intermediates\\res\\merged\\release\\layout\\nim_menu_dialog.xml",
+        "source": "D:\\Project\\Android\\help\\uikit\\res\\layout\\nim_menu_dialog.xml"
     },
     {
         "merged": "D:\\Project\\Android\\help\\uikit\\build\\intermediates\\res\\merged\\release\\layout\\nim_team_message_activity.xml",
@@ -292,10 +292,6 @@
         "source": "D:\\Project\\Android\\help\\uikit\\res\\layout\\nim_team_member_list_item.xml"
     },
     {
-        "merged": "D:\\Project\\Android\\help\\uikit\\build\\intermediates\\res\\merged\\release\\layout\\layout_snackbar_include.xml",
-        "source": "C:\\Users\\zjlloveo0\\.android\\build-cache\\0e48d5155fb7b3310dbc3d51c7ebcd6a8577f7ff\\output\\res\\layout\\layout_snackbar_include.xml"
-    },
-    {
         "merged": "D:\\Project\\Android\\help\\uikit\\build\\intermediates\\res\\merged\\release\\layout\\nim_action_bar_right_clickable_tv.xml",
         "source": "D:\\Project\\Android\\help\\uikit\\res\\layout\\nim_action_bar_right_clickable_tv.xml"
     },
@@ -428,10 +424,6 @@
         "source": "D:\\Project\\Android\\help\\uikit\\res\\layout\\nim_easy_alert_dialog_with_edit_text.xml"
     },
     {
-        "merged": "D:\\Project\\Android\\help\\uikit\\build\\intermediates\\res\\merged\\release\\layout\\abc_simple_dropdown_hint.xml",
-        "source": "C:\\Users\\zjlloveo0\\.android\\build-cache\\1f41d629f2ff2a073c2916eb66174d552cf05002\\output\\res\\layout\\abc_simple_dropdown_hint.xml"
-    },
-    {
         "merged": "D:\\Project\\Android\\help\\uikit\\build\\intermediates\\res\\merged\\release\\layout\\nim_picker_photo_grid_item.xml",
         "source": "D:\\Project\\Android\\help\\uikit\\res\\layout\\nim_picker_photo_grid_item.xml"
     },
@@ -534,10 +526,6 @@
     {
         "merged": "D:\\Project\\Android\\help\\uikit\\build\\intermediates\\res\\merged\\release\\layout\\nim_contacts_item.xml",
         "source": "D:\\Project\\Android\\help\\uikit\\res\\layout\\nim_contacts_item.xml"
-    },
-    {
-        "merged": "D:\\Project\\Android\\help\\uikit\\build\\intermediates\\res\\merged\\release\\layout\\layout_snackbar.xml",
-        "source": "C:\\Users\\zjlloveo0\\.android\\build-cache\\0e48d5155fb7b3310dbc3d51c7ebcd6a8577f7ff\\output\\res\\layout\\layout_snackbar.xml"
     },
     {
         "merged": "D:\\Project\\Android\\help\\uikit\\build\\intermediates\\res\\merged\\release\\layout\\nim_message_activity_text_layout.xml",

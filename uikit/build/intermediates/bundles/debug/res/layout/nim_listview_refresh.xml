@@ -10,6 +10,6 @@
         style="?android:attr/progressBarStyleSmall"
         android:layout_width="18dp"
         android:layout_height="18dp"
-        android:visibility="gone"/>
+        android:visibility="gone" />
 
 </LinearLayout>

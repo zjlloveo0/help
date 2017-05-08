@@ -24,7 +24,7 @@
             android:layout_height="25dp"
             android:layout_marginRight="5dp"
             android:progressDrawable="@drawable/nim_progress_small_white"
-            android:visibility="gone"/>
+            android:visibility="gone" />
 
         <TextView
             android:id="@+id/voice_trans_text"

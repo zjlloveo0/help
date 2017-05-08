@@ -5,10 +5,9 @@
     android:layout_height="wrap_content"
     android:layout_gravity="center"
     android:background="@color/white"
-    android:orientation="vertical" >
+    android:orientation="vertical">
 
-    <include
-        layout="@layout/nim_easy_alert_dialog_title" />
+    <include layout="@layout/nim_easy_alert_dialog_title" />
 
     <TextView
         android:id="@+id/easy_dialog_message_text_view"
@@ -21,7 +20,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/dialog_padding_vertical"
         android:layout_marginLeft="@dimen/dialog_text_margin_horizontal"
-        android:layout_marginRight="@dimen/dialog_text_margin_horizontal" >
+        android:layout_marginRight="@dimen/dialog_text_margin_horizontal">
 
         <EditText
             android:id="@+id/easy_alert_dialog_edit_text"
@@ -46,6 +45,5 @@
             android:visibility="gone" />
     </RelativeLayout>
 
-    <include
-        layout="@layout/nim_easy_alert_dialog_bottom_button" />
+    <include layout="@layout/nim_easy_alert_dialog_bottom_button" />
 </LinearLayout>

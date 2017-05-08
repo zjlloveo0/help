@@ -29,6 +29,8 @@ import com.netease.nimlib.sdk.msg.MsgServiceObserve;
 import com.netease.nimlib.sdk.msg.constant.SessionTypeEnum;
 import com.netease.nimlib.sdk.msg.model.IMMessage;
 import com.zjlloveo0.help.R;
+import com.zjlloveo0.help.fragment.MissionListFragment;
+import com.zjlloveo0.help.fragment.ServerListFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,8 +44,8 @@ public class MainActivity extends AppCompatActivity {
     private FragmentTabHost mTabHost;
     private ViewPager mViewPager;
     private List<Fragment> mFragmentList;
-    private Class mClass[] = {ServiceFragment.class, MissionFragment.class, RecentContactsFragment.class, MineFragment.class};
-    private Fragment mFragment[] = {new ServiceFragment(), new MissionFragment(), new RecentContactsFragment(), new MineFragment()};
+    private Class mClass[] = {ServerListFragment.class, MissionListFragment.class, RecentContactsFragment.class, MineFragment.class};
+    private Fragment mFragment[] = {new ServerListFragment(), new MissionListFragment(), new RecentContactsFragment(), new MineFragment()};
     private String mTitles[] = {"找服务", "去帮忙", "消息", "我的"};
     private int mImages[] = {
             R.drawable.tab_service,
@@ -65,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                snackBar= Snackbar.make(view,"", Snackbar.LENGTH_LONG);
+                snackBar = Snackbar.make(view, "", Snackbar.LENGTH_SHORT);
                 addViewToSnackBar(snackBar,R.layout.snackbar_new_mission,0);
                 setSnackBarColor(snackBar, Color.alpha(0));
                 snackBar.show();

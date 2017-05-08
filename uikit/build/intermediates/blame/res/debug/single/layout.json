@@ -36,12 +36,12 @@
         "source": "D:\\Project\\Android\\help\\uikit\\res\\layout\\nim_team_member_list_item.xml"
     },
     {
-        "merged": "D:\\Project\\Android\\help\\uikit\\build\\intermediates\\res\\merged\\debug\\layout\\nim_recent_contact_list_item.xml",
-        "source": "D:\\Project\\Android\\help\\uikit\\res\\layout\\nim_recent_contact_list_item.xml"
-    },
-    {
         "merged": "D:\\Project\\Android\\help\\uikit\\build\\intermediates\\res\\merged\\debug\\layout\\nim_watch_picture_activity.xml",
         "source": "D:\\Project\\Android\\help\\uikit\\res\\layout\\nim_watch_picture_activity.xml"
+    },
+    {
+        "merged": "D:\\Project\\Android\\help\\uikit\\build\\intermediates\\res\\merged\\debug\\layout\\nim_recent_contact_list_item.xml",
+        "source": "D:\\Project\\Android\\help\\uikit\\res\\layout\\nim_recent_contact_list_item.xml"
     },
     {
         "merged": "D:\\Project\\Android\\help\\uikit\\build\\intermediates\\res\\merged\\debug\\layout\\nim_advanced_team_member_info_layout.xml",
@@ -344,10 +344,6 @@
         "source": "C:\\Users\\zjlloveo0\\.android\\build-cache\\812d1274e1b1604e3dcee5538b7f203b0b981213\\output\\res\\layout\\abc_action_bar_view_list_nav_layout.xml"
     },
     {
-        "merged": "D:\\Project\\Android\\help\\uikit\\build\\intermediates\\res\\merged\\debug\\layout\\layout_snackbar.xml",
-        "source": "C:\\Users\\zjlloveo0\\.android\\build-cache\\0e48d5155fb7b3310dbc3d51c7ebcd6a8577f7ff\\output\\res\\layout\\layout_snackbar.xml"
-    },
-    {
         "merged": "D:\\Project\\Android\\help\\uikit\\build\\intermediates\\res\\merged\\debug\\layout\\nim_popup_menu_layout.xml",
         "source": "D:\\Project\\Android\\help\\uikit\\res\\layout\\nim_popup_menu_layout.xml"
     },
@@ -452,10 +448,6 @@
         "source": "D:\\Project\\Android\\help\\uikit\\res-ptr2\\layout\\simple_load_more.xml"
     },
     {
-        "merged": "D:\\Project\\Android\\help\\uikit\\build\\intermediates\\res\\merged\\debug\\layout\\abc_simple_dropdown_hint.xml",
-        "source": "C:\\Users\\zjlloveo0\\.android\\build-cache\\1f41d629f2ff2a073c2916eb66174d552cf05002\\output\\res\\layout\\abc_simple_dropdown_hint.xml"
-    },
-    {
         "merged": "D:\\Project\\Android\\help\\uikit\\build\\intermediates\\res\\merged\\debug\\layout\\image_layout_multi_touch.xml",
         "source": "D:\\Project\\Android\\help\\uikit\\res\\layout\\image_layout_multi_touch.xml"
     },
@@ -530,10 +522,6 @@
     {
         "merged": "D:\\Project\\Android\\help\\uikit\\build\\intermediates\\res\\merged\\debug\\layout\\nim_message_item_notification.xml",
         "source": "D:\\Project\\Android\\help\\uikit\\res\\layout\\nim_message_item_notification.xml"
-    },
-    {
-        "merged": "D:\\Project\\Android\\help\\uikit\\build\\intermediates\\res\\merged\\debug\\layout\\layout_snackbar_include.xml",
-        "source": "C:\\Users\\zjlloveo0\\.android\\build-cache\\0e48d5155fb7b3310dbc3d51c7ebcd6a8577f7ff\\output\\res\\layout\\layout_snackbar_include.xml"
     },
     {
         "merged": "D:\\Project\\Android\\help\\uikit\\build\\intermediates\\res\\merged\\debug\\layout\\notification_template_part_chronometer.xml",

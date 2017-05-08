@@ -17978,9 +17978,8 @@
                     "startLine": 2211,
                     "startColumn": 4,
                     "startOffset": 159908,
-                    "endLine": 2212,
-                    "endColumn": 12,
-                    "endOffset": 159985
+                    "endColumn": 69,
+                    "endOffset": 159973
                 },
                 "from": {
                     "file": "D:\\Project\\Android\\help\\uikit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
@@ -17988,72 +17987,71 @@
                         "startLine": 521,
                         "startColumn": 4,
                         "startOffset": 26578,
-                        "endLine": 522,
-                        "endColumn": 12,
-                        "endOffset": 26655
+                        "endColumn": 69,
+                        "endOffset": 26643
                     }
                 }
             },
             {
                 "to": {
-                    "startLine": 2213,
+                    "startLine": 2212,
                     "startColumn": 4,
-                    "startOffset": 159990,
-                    "endLine": 2217,
+                    "startOffset": 159978,
+                    "endLine": 2216,
                     "endColumn": 12,
-                    "endOffset": 160251
+                    "endOffset": 160239
                 },
                 "from": {
                     "file": "D:\\Project\\Android\\help\\uikit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
                     "position": {
-                        "startLine": 523,
+                        "startLine": 522,
                         "startColumn": 4,
-                        "startOffset": 26660,
-                        "endLine": 527,
+                        "startOffset": 26648,
+                        "endLine": 526,
                         "endColumn": 12,
-                        "endOffset": 26921
+                        "endOffset": 26909
                     }
                 }
             },
             {
                 "to": {
-                    "startLine": 2218,
+                    "startLine": 2217,
                     "startColumn": 4,
-                    "startOffset": 160256,
-                    "endLine": 2222,
+                    "startOffset": 160244,
+                    "endLine": 2221,
                     "endColumn": 12,
-                    "endOffset": 160500
+                    "endOffset": 160488
                 },
                 "from": {
                     "file": "D:\\Project\\Android\\help\\uikit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
                     "position": {
-                        "startLine": 528,
+                        "startLine": 527,
                         "startColumn": 4,
-                        "startOffset": 26926,
-                        "endLine": 532,
+                        "startOffset": 26914,
+                        "endLine": 531,
                         "endColumn": 12,
-                        "endOffset": 27170
+                        "endOffset": 27158
                     }
                 }
             },
             {
                 "to": {
-                    "startLine": 2223,
+                    "startLine": 2222,
                     "startColumn": 4,
-                    "startOffset": 160505,
+                    "startOffset": 160493,
                     "endLine": 2226,
                     "endColumn": 12,
-                    "endOffset": 160784
+                    "endOffset": 160781
                 },
                 "from": {
                     "file": "D:\\Project\\Android\\help\\uikit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
                     "position": {
-                        "startLine": 533,
+                        "startLine": 532,
                         "startColumn": 4,
-                        "startOffset": 27175,
+                        "startOffset": 27163,
                         "endLine": 536,
                         "endColumn": 12,
-                        "endOffset": 27454
+                        "endOffset": 27451
                     }
                 }
             },
@@ -18061,20 +18059,20 @@
                 "to": {
                     "startLine": 2227,
                     "startColumn": 4,
-                    "startOffset": 160789,
+                    "startOffset": 160786,
                     "endLine": 2231,
                     "endColumn": 12,
-                    "endOffset": 161062
+                    "endOffset": 161059
                 },
                 "from": {
                     "file": "D:\\Project\\Android\\help\\uikit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
                     "position": {
                         "startLine": 537,
                         "startColumn": 4,
-                        "startOffset": 27459,
+                        "startOffset": 27456,
                         "endLine": 541,
                         "endColumn": 12,
-                        "endOffset": 27732
+                        "endOffset": 27729
                     }
                 }
             },
@@ -18082,20 +18080,20 @@
                 "to": {
                     "startLine": 2232,
                     "startColumn": 4,
-                    "startOffset": 161067,
+                    "startOffset": 161064,
                     "endLine": 2237,
                     "endColumn": 12,
-                    "endOffset": 161379
+                    "endOffset": 161376
                 },
                 "from": {
                     "file": "D:\\Project\\Android\\help\\uikit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
                     "position": {
                         "startLine": 542,
                         "startColumn": 4,
-                        "startOffset": 27737,
+                        "startOffset": 27734,
                         "endLine": 547,
                         "endColumn": 12,
-                        "endOffset": 28049
+                        "endOffset": 28046
                     }
                 }
             },
@@ -18103,41 +18101,41 @@
                 "to": {
                     "startLine": 2238,
                     "startColumn": 4,
-                    "startOffset": 161384,
-                    "endLine": 2241,
+                    "startOffset": 161381,
+                    "endLine": 2242,
                     "endColumn": 12,
-                    "endOffset": 161667
+                    "endOffset": 161673
                 },
                 "from": {
                     "file": "D:\\Project\\Android\\help\\uikit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
                     "position": {
                         "startLine": 548,
                         "startColumn": 4,
-                        "startOffset": 28054,
-                        "endLine": 551,
+                        "startOffset": 28051,
+                        "endLine": 552,
                         "endColumn": 12,
-                        "endOffset": 28337
+                        "endOffset": 28343
                     }
                 }
             },
             {
                 "to": {
-                    "startLine": 2242,
+                    "startLine": 2243,
                     "startColumn": 4,
-                    "startOffset": 161672,
-                    "endLine": 2249,
+                    "startOffset": 161678,
+                    "endLine": 2250,
                     "endColumn": 12,
-                    "endOffset": 162115
+                    "endOffset": 162121
                 },
                 "from": {
                     "file": "D:\\Project\\Android\\help\\uikit\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
                     "position": {
-                        "startLine": 552,
+                        "startLine": 553,
                         "startColumn": 4,
-                        "startOffset": 28342,
-                        "endLine": 559,
+                        "startOffset": 28348,
+                        "endLine": 560,
                         "endColumn": 12,
-                        "endOffset": 28785
+                        "endOffset": 28791
                     }
                 }
             }

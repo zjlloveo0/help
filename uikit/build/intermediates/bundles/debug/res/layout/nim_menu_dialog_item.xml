@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:id="@+id/menu_button_click_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:clickable="true"
-                android:background="@drawable/nim_list_item_selector"
-                android:orientation="vertical">
+    android:id="@+id/menu_button_click_layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:clickable="true"
+    android:background="@drawable/nim_list_item_selector"
+    android:orientation="vertical">
 
     <View
         android:id="@+id/divider_line"
         style="@style/horizontal_light_thin_divider"
-        android:background="@color/color_b3b3b3"/>
+        android:background="@color/color_b3b3b3" />
 
     <TextView
         android:id="@+id/menu_button"
@@ -20,7 +20,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="@string/empty"/>
+        android:text="@string/empty" />
 
     <ImageView
         android:id="@+id/menu_select_icon"
@@ -30,7 +30,7 @@
         android:background="@drawable/nim_picker_image_selected"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:visibility="gone"/>
+        android:visibility="gone" />
 
 
 </RelativeLayout>

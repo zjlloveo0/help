@@ -20,10 +20,6 @@
         "source": "D:\\Project\\Android\\help\\uikit\\res\\drawable\\nim_message_button_bottom_audio_selector.xml"
     },
     {
-        "merged": "D:\\Project\\Android\\help\\uikit\\build\\intermediates\\res\\merged\\release\\drawable\\snackbar_background.xml",
-        "source": "C:\\Users\\zjlloveo0\\.android\\build-cache\\0e48d5155fb7b3310dbc3d51c7ebcd6a8577f7ff\\output\\res\\drawable\\snackbar_background.xml"
-    },
-    {
         "merged": "D:\\Project\\Android\\help\\uikit\\build\\intermediates\\res\\merged\\release\\drawable\\abc_btn_colored_material.xml",
         "source": "C:\\Users\\zjlloveo0\\.android\\build-cache\\812d1274e1b1604e3dcee5538b7f203b0b981213\\output\\res\\drawable\\abc_btn_colored_material.xml"
     },
@@ -206,10 +202,6 @@
     {
         "merged": "D:\\Project\\Android\\help\\uikit\\build\\intermediates\\res\\merged\\release\\drawable\\nim_message_unread_news_icon_selector.xml",
         "source": "D:\\Project\\Android\\help\\uikit\\res\\drawable\\nim_message_unread_news_icon_selector.xml"
-    },
-    {
-        "merged": "D:\\Project\\Android\\help\\uikit\\build\\intermediates\\res\\merged\\release\\drawable\\fab_background.xml",
-        "source": "C:\\Users\\zjlloveo0\\.android\\build-cache\\0e48d5155fb7b3310dbc3d51c7ebcd6a8577f7ff\\output\\res\\drawable\\fab_background.xml"
     },
     {
         "merged": "D:\\Project\\Android\\help\\uikit\\build\\intermediates\\res\\merged\\release\\drawable\\abc_tab_indicator_material.xml",

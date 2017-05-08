@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
 
     <FrameLayout
         android:id="@+id/frameLayoutHead"
@@ -13,7 +13,7 @@
         <com.netease.nim.uikit.common.ui.imageview.HeadImageView
             android:id="@+id/imageViewHeader"
             android:layout_width="@dimen/avatar_size_default"
-            android:layout_height="@dimen/avatar_size_default"/>
+            android:layout_height="@dimen/avatar_size_default" />
 
         <ImageView
             android:id="@+id/imageViewOwner"
@@ -21,7 +21,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|right"
             android:src="@drawable/nim_team_owner_icon"
-            android:visibility="gone"/>
+            android:visibility="gone" />
 
         <ImageView
             android:id="@+id/imageViewAdmin"
@@ -29,7 +29,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|right"
             android:src="@drawable/nim_team_admin_icon"
-            android:visibility="gone"/>
+            android:visibility="gone" />
 
         <ImageView
             android:id="@+id/imageViewDeleteTag"
@@ -38,7 +38,7 @@
             android:layout_gravity="top|right"
             android:contentDescription="@string/empty"
             android:visibility="gone"
-            android:src="@drawable/nim_team_member_item_delete_icon"/>
+            android:src="@drawable/nim_team_member_item_delete_icon" />
 
     </FrameLayout>
 
@@ -54,7 +54,6 @@
         android:maxWidth="160dip"
         android:singleLine="true"
         android:textColor="#8f8e8c"
-        android:textSize="18sp">
-    </TextView>
+        android:textSize="18sp"></TextView>
 
 </RelativeLayout>

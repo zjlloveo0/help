@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="@dimen/dp_40">
 
@@ -16,7 +15,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             style="?android:attr/progressBarStyleSmall"
-            android:layout_marginRight="@dimen/dp_4"/>
+            android:layout_marginRight="@dimen/dp_4" />
 
         <TextView
             android:id="@+id/loading_text"
@@ -25,7 +24,7 @@
             android:layout_marginLeft="@dimen/dp_4"
             android:text="@string/loading"
             android:textColor="@android:color/black"
-            android:textSize="@dimen/sp_14"/>
+            android:textSize="@dimen/sp_14" />
     </LinearLayout>
 
     <FrameLayout
@@ -40,7 +39,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="@string/load_failed"/>
+            android:text="@string/load_failed" />
 
     </FrameLayout>
 
@@ -55,6 +54,6 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="@string/load_end"
-            android:textColor="@android:color/darker_gray"/>
+            android:textColor="@android:color/darker_gray" />
     </FrameLayout>
 </FrameLayout>

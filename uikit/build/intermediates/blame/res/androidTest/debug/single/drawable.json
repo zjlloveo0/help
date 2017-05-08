@@ -260,10 +260,6 @@
         "source": "D:\\Project\\Android\\help\\uikit\\build\\intermediates\\bundles\\debug\\res\\drawable\\nim_message_button_bottom_audio_selector.xml"
     },
     {
-        "merged": "D:\\Project\\Android\\help\\uikit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\fab_background.xml",
-        "source": "C:\\Users\\zjlloveo0\\.android\\build-cache\\0e48d5155fb7b3310dbc3d51c7ebcd6a8577f7ff\\output\\res\\drawable\\fab_background.xml"
-    },
-    {
         "merged": "D:\\Project\\Android\\help\\uikit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\abc_list_selector_background_transition_holo_light.xml",
         "source": "C:\\Users\\zjlloveo0\\.android\\build-cache\\812d1274e1b1604e3dcee5538b7f203b0b981213\\output\\res\\drawable\\abc_list_selector_background_transition_holo_light.xml"
     },
@@ -290,10 +286,6 @@
     {
         "merged": "D:\\Project\\Android\\help\\uikit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\nim_video_play_icon_selector.xml",
         "source": "D:\\Project\\Android\\help\\uikit\\build\\intermediates\\bundles\\debug\\res\\drawable\\nim_video_play_icon_selector.xml"
-    },
-    {
-        "merged": "D:\\Project\\Android\\help\\uikit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\snackbar_background.xml",
-        "source": "C:\\Users\\zjlloveo0\\.android\\build-cache\\0e48d5155fb7b3310dbc3d51c7ebcd6a8577f7ff\\output\\res\\drawable\\snackbar_background.xml"
     },
     {
         "merged": "D:\\Project\\Android\\help\\uikit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\nim_recent_contact_sticky_selecter.xml",

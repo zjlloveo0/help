@@ -254,30 +254,30 @@ public class RecentContactsFragment extends TFragment {
             }
         });
 
-        alertDialog.addItem("删除该聊天（仅服务器）", new onSeparateItemClickListener() {
-            @Override
-            public void onClick() {
-                NIMClient.getService(MsgService.class)
-                        .deleteRoamingRecentContact(recent.getContactId(), recent.getSessionType())
-                        .setCallback(new RequestCallback<Void>() {
-                            @Override
-                            public void onSuccess(Void param) {
-                                Toast.makeText(getActivity(), "delete success", Toast.LENGTH_SHORT).show();
-                            }
-
-                            @Override
-                            public void onFailed(int code) {
-                                Toast.makeText(getActivity(), "delete failed, code:" + code, Toast.LENGTH_SHORT).show();
-                            }
-
-                            @Override
-                            public void onException(Throwable exception) {
-
-                            }
-                        });
-            }
-        });
-        alertDialog.show();
+//        alertDialog.addItem("删除该聊天（仅服务器）", new onSeparateItemClickListener() {
+//            @Override
+//            public void onClick() {
+//                NIMClient.getService(MsgService.class)
+//                        .deleteRoamingRecentContact(recent.getContactId(), recent.getSessionType())
+//                        .setCallback(new RequestCallback<Void>() {
+//                            @Override
+//                            public void onSuccess(Void param) {
+//                                Toast.makeText(getActivity(), "delete success", Toast.LENGTH_SHORT).show();
+//                            }
+//
+//                            @Override
+//                            public void onFailed(int code) {
+//                                Toast.makeText(getActivity(), "delete failed, code:" + code, Toast.LENGTH_SHORT).show();
+//                            }
+//
+//                            @Override
+//                            public void onException(Throwable exception) {
+//
+//                            }
+//                        });
+//            }
+//        });
+//        alertDialog.show();
     }
 
     private void addTag(RecentContact recent, long tag) {

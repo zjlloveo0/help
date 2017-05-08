@@ -2,8 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white" >
-    
+    android:background="@color/white">
+
     <GridView
         android:id="@+id/picker_images_gridview"
         style="@style/grid_view"
@@ -12,8 +12,7 @@
         android:horizontalSpacing="2dp"
         android:listSelector="@color/transparent"
         android:numColumns="4"
-        android:verticalSpacing="2dp" 
-        android:fastScrollEnabled="false">
-    </GridView>
+        android:verticalSpacing="2dp"
+        android:fastScrollEnabled="false"></GridView>
 
 </RelativeLayout>

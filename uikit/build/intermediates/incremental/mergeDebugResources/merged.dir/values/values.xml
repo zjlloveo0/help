@@ -2209,8 +2209,7 @@
     <style name="edit_text_style">
         <item name="android:textCursorDrawable">@color/black</item>
     </style>
-    <style name="grid_view" parent="@android:style/Widget.GridView">
-    </style>
+    <style name="grid_view" parent="@android:style/Widget.GridView"/>
     <style name="horizontal_deep_thick_divider">
         <item name="android:layout_height">@dimen/split_one_dip</item>
         <item name="android:layout_width">fill_parent</item>
@@ -2223,7 +2222,8 @@
     </style>
     <style name="list_view" parent="@android:style/Widget.ListView">
         <item name="android:scrollbarThumbVertical">@drawable/nim_scrollbar_handle_holo_dark</item>
-        <item name="android:scrollbarThumbHorizontal">@drawable/nim_scrollbar_handle_holo_dark</item>
+        <item name="android:scrollbarThumbHorizontal">@drawable/nim_scrollbar_handle_holo_dark
+        </item>
     </style>
     <style name="myToolbarNavigationButtonStyle" parent="@style/Widget.AppCompat.Toolbar.Button.Navigation">
         <item name="android:minWidth">0dp</item>
@@ -2238,7 +2238,8 @@
     </style>
     <style name="scroll_view" parent="@android:style/Widget.ScrollView">
         <item name="android:scrollbarThumbVertical">@drawable/nim_scrollbar_handle_holo_dark</item>
-        <item name="android:scrollbarThumbHorizontal">@drawable/nim_scrollbar_handle_holo_dark</item>
+        <item name="android:scrollbarThumbHorizontal">@drawable/nim_scrollbar_handle_holo_dark
+        </item>
     </style>
     <style name="sdk_share_dialog" parent="@android:style/Theme.Dialog">
         <item name="android:windowBackground">@color/transparent</item>
