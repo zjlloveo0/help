@@ -30,7 +30,7 @@ import java.util.Date;
 import java.util.List;
 
 public class UserServerListActivity extends Activity {
-    private ListView lv_ServerList;
+    private CustomRefreshListView lv_ServerList;
     private TextView tv_detail_headTitle;
     private List<ServerUser> serverUserList = new ArrayList<ServerUser>();
     private List<ServerUser> serverUserList1 = new ArrayList<ServerUser>();
@@ -64,9 +64,11 @@ public class UserServerListActivity extends Activity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setVisibility(View.VISIBLE);
+        toolbar.measure(0, 0);
         tv_detail_headTitle = (TextView) findViewById(R.id.tv_detail_headTitle);
         tv_detail_headTitle.setText(userName + "的服务");
-        lv_ServerList = (ListView) findViewById(R.id.lv_serverList);
+        lv_ServerList = (CustomRefreshListView) findViewById(R.id.lv_serverList);
+        lv_ServerList.setPadding(0, toolbar.getMeasuredHeight(), 0, 0);
         lv_ServerList.setAdapter(adapter);
         lv_ServerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

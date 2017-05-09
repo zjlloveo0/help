@@ -182,6 +182,7 @@
 
         <Button
             android:id="@+id/bt_talkToHe"
+            app:backgroundTint="@color/colorPrimary"
             android:backgroundTint="@color/colorPrimary"
             android:text="和Ta聊聊"
             android:onClick="talkToHeDetail"
@@ -193,6 +194,7 @@
 
         <Button
             android:id="@+id/bt_use_this"
+            app:backgroundTint="@color/colorPrimary"
             android:backgroundTint="@color/colorPrimary"
             android:text="使用服务"
             android:onClick="useServer"

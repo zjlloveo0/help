@@ -43,6 +43,7 @@ public class P2PMessageActivity extends BaseMessageActivity {
         }
         intent.setClass(context, P2PMessageActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
         context.startActivity(intent);
     }

@@ -62,7 +62,13 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <ListView
+    <!--<ListView-->
+    <!--android:id="@+id/lv_serverList"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:divider="@color/colorPrimary"-->
+    <!--android:dividerHeight="2px" />-->
+    <com.zjlloveo0.help.activity.CustomRefreshListView
         android:id="@+id/lv_serverList"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

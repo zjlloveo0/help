@@ -112,12 +112,12 @@
         "source": "D:\\Project\\Android\\help\\uikit\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\nim_cameras.png"
     },
     {
-        "merged": "D:\\Project\\Android\\help\\uikit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\abc_textfield_search_activated_mtrl_alpha.9.png",
-        "source": "C:\\Users\\zjlloveo0\\.android\\build-cache\\812d1274e1b1604e3dcee5538b7f203b0b981213\\output\\res\\drawable-xhdpi-v4\\abc_textfield_search_activated_mtrl_alpha.9.png"
-    },
-    {
         "merged": "D:\\Project\\Android\\help\\uikit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\nim_ic_trans_fail.png",
         "source": "D:\\Project\\Android\\help\\uikit\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\nim_ic_trans_fail.png"
+    },
+    {
+        "merged": "D:\\Project\\Android\\help\\uikit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\abc_textfield_search_activated_mtrl_alpha.9.png",
+        "source": "C:\\Users\\zjlloveo0\\.android\\build-cache\\812d1274e1b1604e3dcee5538b7f203b0b981213\\output\\res\\drawable-xhdpi-v4\\abc_textfield_search_activated_mtrl_alpha.9.png"
     },
     {
         "merged": "D:\\Project\\Android\\help\\uikit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\abc_ic_clear_mtrl_alpha.png",

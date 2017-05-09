@@ -23,7 +23,4 @@
     <!--新增任务-->
     <string name="add_mission">发布求助</string>
     <string name="add_service">发布服务</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

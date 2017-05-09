@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import com.loopj.android.image.SmartImageView;
 import com.zjlloveo0.help.R;
+import com.zjlloveo0.help.activity.CustomRefreshListView;
 import com.zjlloveo0.help.activity.ServerDetailActivity;
 import com.zjlloveo0.help.model.ServerUser;
 import com.zjlloveo0.help.utils.SYSVALUE;
@@ -33,11 +34,12 @@ import java.util.List;
 
 public class ServerListFragment extends Fragment {
     private View mRootView;
-    ListView lv_ServerList;
+    CustomRefreshListView lv_ServerList;
     List<ServerUser> serverUserList = new ArrayList<ServerUser>();
     List<ServerUser> serverUserList1 = new ArrayList<ServerUser>();
     myAdapter adapter = new myAdapter();
-    String HOST = SYSVALUE.HOST;
+    private String HOST = SYSVALUE.HOST;
+    private CustomRefreshListView.OnRefreshListener listener;
     public final static String PAR_KEY = "com.zjlloveo0.help.model.ServerUser";
 
     Handler handler = new Handler() {
@@ -51,6 +53,10 @@ public class ServerListFragment extends Fragment {
                     serverUserList.clear();
                     serverUserList.addAll(serverUserList1);
                     adapter.notifyDataSetChanged();
+                    lv_ServerList.completeRefresh();
+                    break;
+                case 2:
+                    lv_ServerList.failRefresh();
                     break;
             }
         }
@@ -59,9 +65,9 @@ public class ServerListFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        updateData();
         if (mRootView == null) {
             Log.e("666", "ServerListFragment");
+            updateData();
             mRootView = inflater.inflate(R.layout.serverlist_fragment, container, false);
         }
         ViewGroup parent = (ViewGroup) mRootView.getParent();
@@ -69,7 +75,7 @@ public class ServerListFragment extends Fragment {
             parent.removeView(mRootView);
         }
 
-        lv_ServerList = (ListView) mRootView.findViewById(R.id.lv_serverList);
+        lv_ServerList = (CustomRefreshListView) mRootView.findViewById(R.id.lv_serverList);
         lv_ServerList.setAdapter(adapter);
         lv_ServerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -81,6 +87,19 @@ public class ServerListFragment extends Fragment {
                 bundle.putParcelable(PAR_KEY, su);
                 intent.putExtras(bundle);
                 startActivity(intent);
+            }
+        });
+        lv_ServerList.setOnRefreshListener(new CustomRefreshListView.OnRefreshListener() {
+            @Override
+            public void onPullRefresh() {
+                Toast.makeText(getContext(), "刷新", Toast.LENGTH_SHORT).show();
+                updateData();
+            }
+
+            @Override
+            public void onLoadingMore() {
+                Toast.makeText(getContext(), "加载", Toast.LENGTH_SHORT).show();
+                lv_ServerList.completeRefresh();
             }
         });
         return mRootView;
@@ -181,6 +200,9 @@ public class ServerListFragment extends Fragment {
                         handler.sendMessage(msg);
                     }
                 } catch (JSONException e) {
+                    Message msg = handler.obtainMessage();
+                    msg.what = 2;
+                    handler.sendMessage(msg);
                     e.printStackTrace();
                 }
             }
@@ -188,9 +210,9 @@ public class ServerListFragment extends Fragment {
         return serverUserList1;
     }
 
-    @Override
-    public void onHiddenChanged(boolean hidden) {
-        Log.v("666", "Server onHiddenChanged" + hidden);
-        updateData();
-    }
+//    @Override
+//    public void onHiddenChanged(boolean hidden) {
+//        Log.v("666", "Server onHiddenChanged" + hidden);
+//        updateData();
+//    }
 }
