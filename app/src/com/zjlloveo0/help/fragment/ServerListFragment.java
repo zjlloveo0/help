@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -34,12 +35,12 @@ import java.util.List;
 
 public class ServerListFragment extends Fragment {
     private View mRootView;
-    CustomRefreshListView lv_ServerList;
-    List<ServerUser> serverUserList = new ArrayList<ServerUser>();
-    List<ServerUser> serverUserList1 = new ArrayList<ServerUser>();
-    myAdapter adapter = new myAdapter();
+    private CustomRefreshListView lv_ServerList;
+    private LinearLayout ll_no_data;
+    private List<ServerUser> serverUserList = new ArrayList<ServerUser>();
+    private List<ServerUser> serverUserList1 = new ArrayList<ServerUser>();
+    private myAdapter adapter = new myAdapter();
     private String HOST = SYSVALUE.HOST;
-    private CustomRefreshListView.OnRefreshListener listener;
     public final static String PAR_KEY = "com.zjlloveo0.help.model.ServerUser";
 
     Handler handler = new Handler() {
@@ -47,9 +48,13 @@ public class ServerListFragment extends Fragment {
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case 0:
-                    Toast.makeText(getContext(), "添加成功!", Toast.LENGTH_SHORT).show();
+                    ll_no_data.setVisibility(View.GONE);
+                    serverUserList.clear();
+                    serverUserList.addAll(serverUserList1);
+                    adapter.notifyDataSetChanged();
                     break;
                 case 1:
+                    ll_no_data.setVisibility(View.GONE);
                     serverUserList.clear();
                     serverUserList.addAll(serverUserList1);
                     adapter.notifyDataSetChanged();
@@ -58,6 +63,18 @@ public class ServerListFragment extends Fragment {
                 case 2:
                     lv_ServerList.failRefresh();
                     break;
+                case 3:
+                    serverUserList.clear();
+                    adapter.notifyDataSetChanged();
+                    ll_no_data.setVisibility(View.VISIBLE);
+                    break;
+                case 4:
+                    serverUserList.clear();
+                    adapter.notifyDataSetChanged();
+                    ll_no_data.setVisibility(View.VISIBLE);
+                    lv_ServerList.noResRefresh();
+                    break;
+
             }
         }
     };
@@ -67,14 +84,15 @@ public class ServerListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         if (mRootView == null) {
             Log.e("666", "ServerListFragment");
-            updateData();
+            updateData(true);
             mRootView = inflater.inflate(R.layout.serverlist_fragment, container, false);
         }
         ViewGroup parent = (ViewGroup) mRootView.getParent();
         if (parent != null) {
             parent.removeView(mRootView);
         }
-
+        ll_no_data = (LinearLayout) mRootView.findViewById(R.id.ll_no_data);
+        ll_no_data.setVisibility(View.GONE);
         lv_ServerList = (CustomRefreshListView) mRootView.findViewById(R.id.lv_serverList);
         lv_ServerList.setAdapter(adapter);
         lv_ServerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -92,14 +110,12 @@ public class ServerListFragment extends Fragment {
         lv_ServerList.setOnRefreshListener(new CustomRefreshListView.OnRefreshListener() {
             @Override
             public void onPullRefresh() {
-                Toast.makeText(getContext(), "刷新", Toast.LENGTH_SHORT).show();
-                updateData();
+                updateData(false);
             }
 
             @Override
             public void onLoadingMore() {
                 Toast.makeText(getContext(), "加载", Toast.LENGTH_SHORT).show();
-                lv_ServerList.completeRefresh();
             }
         });
         return mRootView;
@@ -160,7 +176,7 @@ public class ServerListFragment extends Fragment {
         }
     }
 
-    public List<ServerUser> updateData() {
+    public List<ServerUser> updateData(final boolean isFirst) {
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -196,12 +212,16 @@ public class ServerListFragment extends Fragment {
                             serverUserList1.add(serverUser);
                         }
                         Message msg = handler.obtainMessage();
-                        msg.what = 1;
+                        msg.what = isFirst ? 0 : 1;
+                        handler.sendMessage(msg);
+                    } else {
+                        Message msg = handler.obtainMessage();
+                        msg.what = isFirst ? 3 : 4;
                         handler.sendMessage(msg);
                     }
                 } catch (JSONException e) {
                     Message msg = handler.obtainMessage();
-                    msg.what = 2;
+                    msg.what = isFirst ? 3 : 2;
                     handler.sendMessage(msg);
                     e.printStackTrace();
                 }

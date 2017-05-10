@@ -1,13 +1,11 @@
-package com.zjlloveo0.help.fragment;
+package com.zjlloveo0.help.activity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.util.Log;
-import android.view.LayoutInflater;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -18,9 +16,8 @@ import android.widget.Toast;
 
 import com.loopj.android.image.SmartImageView;
 import com.zjlloveo0.help.R;
-import com.zjlloveo0.help.activity.CustomRefreshListView;
-import com.zjlloveo0.help.activity.MissionDetailActivity;
 import com.zjlloveo0.help.model.MissionUser;
+import com.zjlloveo0.help.model.ServerUser;
 import com.zjlloveo0.help.utils.Request2Server;
 import com.zjlloveo0.help.utils.SYSVALUE;
 
@@ -32,17 +29,17 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class MissionListFragment extends Fragment {
-    private View mRootView;
+public class UserMissionListActivity extends Activity {
     private CustomRefreshListView lv_MissionList;
-    private LinearLayout ll_no_data;
+    private TextView tv_detail_headTitle;
     private TextView tv_no_data_mission;
+    private LinearLayout ll_no_data;
     private List<MissionUser> missionUserList = new ArrayList<MissionUser>();
     private List<MissionUser> missionUserList1 = new ArrayList<MissionUser>();
     private myAdapter adapter = new myAdapter();
-    private String HOST = SYSVALUE.HOST;
+    private String userID;
     public final static String PAR_KEY = "com.zjlloveo0.help.model.MissionUser";
-
+    String HOST = SYSVALUE.HOST;
     Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -78,28 +75,34 @@ public class MissionListFragment extends Fragment {
         }
     };
 
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        if (mRootView == null) {
-            Log.e("666", "MissionListFragment");
-            updateData(true);
-            mRootView = inflater.inflate(R.layout.missionlist_fragment, container, false);
-        }
-        ViewGroup parent = (ViewGroup) mRootView.getParent();
-        if (parent != null) {
-            parent.removeView(mRootView);
-        }
-        ll_no_data = (LinearLayout) mRootView.findViewById(R.id.ll_no_data);
+    protected void onCreate(Bundle savedInstanceState) {
+        userID = this.getIntent().getExtras().getString("userID").trim();
+        String userName = this.getIntent().getExtras().getString("userName").trim();
+        updateData(true);
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.missionlist_fragment);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setVisibility(View.VISIBLE);
+        toolbar.measure(0, 0);
+        tv_no_data_mission = (TextView) findViewById(R.id.tv_no_data_mission);
+        tv_no_data_mission.setText("TA还没有完成任何任务，去别处看看吧");
+        ll_no_data = (LinearLayout) findViewById(R.id.ll_no_data);
         ll_no_data.setVisibility(View.GONE);
-        lv_MissionList = (CustomRefreshListView) mRootView.findViewById(R.id.lv_missionList);
+        tv_detail_headTitle = (TextView) findViewById(R.id.tv_detail_headTitle);
+        tv_detail_headTitle.setText(userName + "的任务");
+        lv_MissionList = (CustomRefreshListView) findViewById(R.id.lv_missionList);
+        lv_MissionList.setPadding(0, toolbar.getMeasuredHeight(), 0, 0);
+        ll_no_data = (LinearLayout) findViewById(R.id.ll_no_data);
+        ll_no_data.setVisibility(View.GONE);
         lv_MissionList.setAdapter(adapter);
         lv_MissionList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 ViewHolder viewHolder = (ViewHolder) view.getTag();
                 MissionUser mu = viewHolder.missionUser;
-                Intent intent = new Intent(getContext(), MissionDetailActivity.class);
+                Intent intent = new Intent(getApplicationContext(), MissionDetailActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putParcelable(PAR_KEY, mu);
                 intent.putExtras(bundle);
@@ -114,10 +117,13 @@ public class MissionListFragment extends Fragment {
 
             @Override
             public void onLoadingMore() {
-                Toast.makeText(getContext(), "加载", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "加载", Toast.LENGTH_SHORT).show();
             }
         });
-        return mRootView;
+    }
+
+    public void back(View view) {
+        finish();
     }
 
     public class ViewHolder {
@@ -154,7 +160,7 @@ public class MissionListFragment extends Fragment {
         public View getView(int position, View convertView, ViewGroup parent) {
             ViewHolder holder;
             if (convertView == null) {
-                convertView = View.inflate(getContext(), R.layout.missionlist_items, null);
+                convertView = View.inflate(getApplicationContext(), R.layout.missionlist_items, null);
                 holder = new ViewHolder();
                 holder.iv_mission_image = (SmartImageView) convertView.findViewById(R.id.iv_mission_image);
                 holder.tv_mission_username = (TextView) convertView.findViewById(R.id.tv_mission_username);
@@ -183,7 +189,7 @@ public class MissionListFragment extends Fragment {
 
                 JSONObject result = null;
                 try {
-                    result = new JSONObject(Request2Server.getRequsetResult(HOST + "findMissionUser?isEnable=1"));
+                    result = new JSONObject(Request2Server.getRequsetResult(HOST + "findMissionUser?isEnable=3&receiverId=" + userID));
                     if (result.getInt("code") > 0) {
                         JSONArray objs = result.getJSONArray("content");
                         for (int i = 0; i < objs.length(); i++) {
@@ -233,10 +239,4 @@ public class MissionListFragment extends Fragment {
         }).start();
         return missionUserList1;
     }
-
-//    @Override
-//    public void onHiddenChanged(boolean hidden) {
-//        Log.v("666", "Mission onHiddenChanged" + hidden);
-//        updateData();
-//    }
 }

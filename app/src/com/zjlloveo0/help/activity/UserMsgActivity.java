@@ -122,15 +122,15 @@ public class UserMsgActivity extends Activity {
                             userSchool.setPassword(password);
                             userSchool.setImg(img);
                             userSchool.setStuNum(stuNum);
-                            userSchool.setPoint(Integer.valueOf(point));
-                            userSchool.setCollegeId(Integer.valueOf(collegeId));
-                            userSchool.setStar(Integer.valueOf(star));
-                            userSchool.setIsEnable(Integer.valueOf(isEnable));
+                            userSchool.setPoint((point == null || "".equals(point) || "null".equals(point)) ? 0 : Integer.valueOf(point));
+                            userSchool.setCollegeId((collegeId == null || "".equals(collegeId) || "null".equals(collegeId)) ? 0 : Integer.valueOf(collegeId));
+                            userSchool.setStar((star == null || "".equals(star) || "null".equals(star)) ? 0 : Integer.valueOf(star));
+                            userSchool.setIsEnable((isEnable == null || "".equals(isEnable) || "null".equals(isEnable)) ? 0 : Integer.valueOf(isEnable));
                             userSchool.setUpdateTime(new Date(updateTime));
                             userSchool.setSchoolName(schoolName);
                             userSchool.setCollegeName(collegeName);
-                            userSchool.setCreateMissionNum(Integer.valueOf(createMissionNum));
-                            userSchool.setCreateServerNum(Integer.valueOf(createServerNum));
+                            userSchool.setCreateMissionNum((createMissionNum == null || "".equals(createMissionNum) || "null".equals(createMissionNum)) ? 0 : Integer.valueOf(createMissionNum));
+                            userSchool.setCreateServerNum((createServerNum == null || "".equals(createServerNum) || "null".equals(createServerNum)) ? 0 : Integer.valueOf(createServerNum));
                             headImg = Request2Server.getBitMapFromUrl(HOST + userSchool.getImg());
                             runOnUiThread(new Runnable() {
                                 @Override
@@ -174,5 +174,11 @@ public class UserMsgActivity extends Activity {
     }
 
     public void helpOthers(View view) {
+        Intent intent = new Intent(getApplicationContext(), UserMissionListActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putString("userID", userID);
+        bundle.putString("userName", userSchool.getName());
+        intent.putExtras(bundle);
+        startActivity(intent);
     }
 }

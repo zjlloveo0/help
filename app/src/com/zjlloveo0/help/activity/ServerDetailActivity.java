@@ -32,7 +32,7 @@ public class ServerDetailActivity extends Activity {
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_detail);
+        setContentView(R.layout.server_detail);
         findView();
         initView();
     }

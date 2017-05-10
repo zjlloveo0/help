@@ -27,6 +27,7 @@
     <TextView
         android:id="@+id/tv_mission_title"
         android:text="标题"
+        android:paddingLeft="5dp"
         android:layout_below="@id/iv_mission_image"
         android:maxLines="1"
         android:layout_marginTop="3dp"
@@ -43,7 +44,8 @@
 
     <TextView
         android:id="@+id/tv_mission_description"
-        android:text="内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容"
+        android:text="内容"
+        android:paddingLeft="5dp"
         android:layout_below="@id/tv_mission_title"
         android:layout_marginTop="1dp"
         android:maxLines="2"
@@ -55,6 +57,7 @@
 
     <TextView
         android:text="王三"
+        android:paddingLeft="5dp"
         android:id="@+id/tv_mission_username"
         android:layout_alignBottom="@id/iv_mission_image"
         android:layout_marginTop="1dp"

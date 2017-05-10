@@ -83,6 +83,7 @@ public class CustomRefreshListView extends ListView implements AbsListView.OnScr
     private final int PULL_REFRESH = 0;//下拉刷新的状态
     private final int RELEASE_REFRESH = 1;//松开刷新的状态
     private final int REFRESHING = 2;//正在刷新的状态
+    private final int REFRESH_END = 3;//刷新结束的状态
 
     /**
      * 当前下拉刷新处于的状态
@@ -177,7 +178,7 @@ public class CustomRefreshListView extends ListView implements AbsListView.OnScr
                 break;
             case MotionEvent.ACTION_MOVE:
 
-                if (currentState == REFRESHING) {
+                if (currentState == REFRESHING || currentState == REFRESH_END) {
                     //如果当前处在滑动状态，则不做处理
                     break;
                 }
@@ -254,6 +255,33 @@ public class CustomRefreshListView extends ListView implements AbsListView.OnScr
         }
     }
 
+    public void noResRefresh() {
+        if (isLoadingMore) {
+            //重置footerView状态
+            footerView.setPadding(0, -footerViewHeight, 0, 0);
+            isLoadingMore = false;
+        }
+        {
+            //重置headerView状态
+            tv_state.setText("没有数据");
+            refresh_fail.setVisibility(View.VISIBLE);
+            pb_rotate.setVisibility(View.INVISIBLE);
+            currentState = REFRESH_END;
+            tv_time.setText("最后刷新：" + getCurrentTime());
+            headerView.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    headerView.setPadding(0, -headerViewHeight, 0, 0);
+                    iv_arrow.setVisibility(View.VISIBLE);
+                    refresh_succ.setVisibility(View.GONE);
+                    currentState = PULL_REFRESH;
+                    tv_state.setText("下拉刷新");
+                    refresh_fail.setVisibility(View.GONE);
+                }
+            }, 3000);
+        }
+    }
+
     /**
      * 完成刷新操作，重置状态,在你获取完数据并更新完adater之后，去在UI线程中调用该方法
      */
@@ -262,18 +290,20 @@ public class CustomRefreshListView extends ListView implements AbsListView.OnScr
             //重置footerView状态
             footerView.setPadding(0, -footerViewHeight, 0, 0);
             isLoadingMore = false;
-        } else {
+        }
+        {
             //重置headerView状态
             tv_state.setText("刷新失败,请稍后再试！");
             refresh_fail.setVisibility(View.VISIBLE);
             pb_rotate.setVisibility(View.INVISIBLE);
-            currentState = PULL_REFRESH;
+            currentState = REFRESH_END;
             headerView.postDelayed(new Runnable() {
                 @Override
                 public void run() {
                     headerView.setPadding(0, -headerViewHeight, 0, 0);
                     iv_arrow.setVisibility(View.VISIBLE);
                     refresh_succ.setVisibility(View.GONE);
+                    currentState = PULL_REFRESH;
                     tv_state.setText("下拉刷新");
                     refresh_fail.setVisibility(View.GONE);
                 }
@@ -286,11 +316,12 @@ public class CustomRefreshListView extends ListView implements AbsListView.OnScr
             //重置footerView状态
             footerView.setPadding(0, -footerViewHeight, 0, 0);
             isLoadingMore = false;
-        } else {
+        }
+        {
             //重置headerView状态
             refresh_succ.setVisibility(VISIBLE);
             tv_state.setText("刷新成功！");
-            currentState = PULL_REFRESH;
+            currentState = REFRESH_END;
             pb_rotate.setVisibility(View.INVISIBLE);
             tv_time.setText("最后刷新：" + getCurrentTime());
             headerView.postDelayed(new Runnable() {
@@ -298,6 +329,7 @@ public class CustomRefreshListView extends ListView implements AbsListView.OnScr
                 public void run() {
                     headerView.setPadding(0, -headerViewHeight, 0, 0);
                     iv_arrow.setVisibility(View.VISIBLE);
+                    currentState = PULL_REFRESH;
                     tv_state.setText("下拉刷新");
                     refresh_succ.setVisibility(View.GONE);
                 }

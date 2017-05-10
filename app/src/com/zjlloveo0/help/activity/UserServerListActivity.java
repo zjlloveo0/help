@@ -4,14 +4,13 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
-import android.widget.ListView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,6 +31,8 @@ import java.util.List;
 public class UserServerListActivity extends Activity {
     private CustomRefreshListView lv_ServerList;
     private TextView tv_detail_headTitle;
+    private TextView tv_no_data_server;
+    private LinearLayout ll_no_data;
     private List<ServerUser> serverUserList = new ArrayList<ServerUser>();
     private List<ServerUser> serverUserList1 = new ArrayList<ServerUser>();
     private myAdapter adapter = new myAdapter();
@@ -43,12 +44,31 @@ public class UserServerListActivity extends Activity {
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case 0:
-                    Toast.makeText(getApplicationContext(), "添加成功!", Toast.LENGTH_SHORT).show();
-                    break;
-                case 1:
+                    ll_no_data.setVisibility(View.GONE);
                     serverUserList.clear();
                     serverUserList.addAll(serverUserList1);
                     adapter.notifyDataSetChanged();
+                    break;
+                case 1:
+                    ll_no_data.setVisibility(View.GONE);
+                    serverUserList.clear();
+                    serverUserList.addAll(serverUserList1);
+                    adapter.notifyDataSetChanged();
+                    lv_ServerList.completeRefresh();
+                    break;
+                case 2:
+                    lv_ServerList.failRefresh();
+                    break;
+                case 3:
+                    serverUserList.clear();
+                    adapter.notifyDataSetChanged();
+                    ll_no_data.setVisibility(View.VISIBLE);
+                    break;
+                case 4:
+                    serverUserList.clear();
+                    adapter.notifyDataSetChanged();
+                    ll_no_data.setVisibility(View.VISIBLE);
+                    lv_ServerList.noResRefresh();
                     break;
             }
         }
@@ -58,13 +78,17 @@ public class UserServerListActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         userID = this.getIntent().getExtras().getString("userID").trim();
         String userName = this.getIntent().getExtras().getString("userName").trim();
-        updateData();
+        updateData(true);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.serverlist_fragment);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setVisibility(View.VISIBLE);
         toolbar.measure(0, 0);
+        tv_no_data_server = (TextView) findViewById(R.id.tv_no_data_server);
+        tv_no_data_server.setText("TA还没有任何服务，去别处看看吧");
+        ll_no_data = (LinearLayout) findViewById(R.id.ll_no_data);
+        ll_no_data.setVisibility(View.GONE);
         tv_detail_headTitle = (TextView) findViewById(R.id.tv_detail_headTitle);
         tv_detail_headTitle.setText(userName + "的服务");
         lv_ServerList = (CustomRefreshListView) findViewById(R.id.lv_serverList);
@@ -80,6 +104,17 @@ public class UserServerListActivity extends Activity {
                 bundle.putParcelable(PAR_KEY, su);
                 intent.putExtras(bundle);
                 startActivity(intent);
+            }
+        });
+        lv_ServerList.setOnRefreshListener(new CustomRefreshListView.OnRefreshListener() {
+            @Override
+            public void onPullRefresh() {
+                updateData(false);
+            }
+
+            @Override
+            public void onLoadingMore() {
+                Toast.makeText(getApplicationContext(), "加载", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -143,7 +178,7 @@ public class UserServerListActivity extends Activity {
         }
     }
 
-    public List<ServerUser> updateData() {
+    public List<ServerUser> updateData(final boolean isFirst) {
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -179,10 +214,17 @@ public class UserServerListActivity extends Activity {
                             serverUserList1.add(serverUser);
                         }
                         Message msg = handler.obtainMessage();
-                        msg.what = 1;
+                        msg.what = isFirst ? 0 : 1;
+                        handler.sendMessage(msg);
+                    } else {
+                        Message msg = handler.obtainMessage();
+                        msg.what = isFirst ? 3 : 4;
                         handler.sendMessage(msg);
                     }
                 } catch (JSONException e) {
+                    Message msg = handler.obtainMessage();
+                    msg.what = isFirst ? 3 : 2;
+                    handler.sendMessage(msg);
                     e.printStackTrace();
                 }
             }
