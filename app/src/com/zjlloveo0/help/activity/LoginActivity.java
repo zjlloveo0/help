@@ -80,6 +80,7 @@ public class LoginActivity extends AppCompatActivity implements ActivityCompat.O
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        SYSVALUE.currentUser = null;
         SMSSDK.initSDK(this, "1d3bfce999723", "d02c9bfe1e3f40f6b4b62e1a38613768");
         eh = new EventHandler() {
             @Override
@@ -326,7 +327,7 @@ public class LoginActivity extends AppCompatActivity implements ActivityCompat.O
                             currentUser.setUpdateTime(new Date(jsonObj.getString("updateTime")));
                             currentUser.setSchoolName(jsonObj.getString("schoolName"));
                             currentUser.setCollegeName(jsonObj.getString("collegeName"));
-
+                            SYSVALUE.currentUser = currentUser;
                             resLogin = 1;
                             break;//登录成功
                         case 106:

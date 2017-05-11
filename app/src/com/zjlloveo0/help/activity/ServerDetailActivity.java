@@ -1,19 +1,32 @@
 package com.zjlloveo0.help.activity;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+
+import android.os.Handler;
+import android.os.Message;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.loopj.android.image.SmartImageView;
 import com.netease.nim.uikit.NimUIKit;
 import com.zjlloveo0.help.R;
 import com.zjlloveo0.help.fragment.ServerListFragment;
+import com.zjlloveo0.help.model.Orders;
 import com.zjlloveo0.help.model.ServerUser;
+import com.zjlloveo0.help.other.LoadingDialog;
 import com.zjlloveo0.help.utils.Request2Server;
 import com.zjlloveo0.help.utils.SYSVALUE;
+
+import org.json.JSONObject;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -26,13 +39,34 @@ public class ServerDetailActivity extends Activity {
     private TextView tv_detail_title;
     private TextView tv_detail_exPoint;
     private TextView tv_detail_content;
+    private LoadingDialog dialog1;
+    private LinearLayout ll_others_handle;
+    private Button bt_edit;
     String HOST = SYSVALUE.HOST;
     private ServerUser serverUser;
+
+    Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case 0:
+                    Toast.makeText(getApplicationContext(), "系统异常", Toast.LENGTH_SHORT).show();
+                    dialog1.dismiss();
+                    break;
+                case 1:
+                    Toast.makeText(getApplicationContext(), msg.obj.toString(), Toast.LENGTH_SHORT).show();
+                    dialog1.dismiss();
+                    break;
+            }
+        }
+    };
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.server_detail);
+        dialog1 = new LoadingDialog(ServerDetailActivity.this);
+        dialog1.setCanceledOnTouchOutside(false);
         findView();
         initView();
     }
@@ -50,6 +84,50 @@ public class ServerDetailActivity extends Activity {
     }
 
     public void useServer(View view) {
+        final View layout = getLayoutInflater().inflate(R.layout.alert_dialog_use_server, null);
+        final EditText et_user_server_message = (EditText) layout.findViewById(R.id.et_user_server_message);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("使用服务");
+        builder.setIcon(R.drawable.tab_service_a);
+        builder.setView(layout);
+        builder.setNegativeButton("取消", null);
+        builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                dialog1.show();
+                final Orders orders = new Orders();
+                orders.setIsEnable(1);
+                orders.setOrderType(1);
+                orders.setServerId(serverUser.getId());
+                orders.setCreateId(SYSVALUE.currentUser.getId());
+                orders.setUId(serverUser.getCreaterId());
+                orders.setMessage(et_user_server_message.getText().toString());
+                orders.setExchangePoint(serverUser.getExchangePoint());
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        String result = "";
+                        Message msg = handler.obtainMessage();
+                        try {
+                            result = Request2Server.getRequsetResult(HOST + "createOrders" + Request2Server.getParamters(orders));
+                            if (!"".equals(result)) {
+                                msg.what = 1;
+                                msg.obj = (new JSONObject(result)).getString("content");
+                                handler.sendMessage(msg);
+                            } else {
+                                msg.what = 0;
+                                handler.sendMessage(msg);
+                            }
+                        } catch (Exception e) {
+                            msg.what = 0;
+                            handler.sendMessage(msg);
+                            e.printStackTrace();
+                        }
+
+                    }
+                }).start();
+            }
+        });
+        builder.create().show();
     }
 
 
@@ -79,6 +157,13 @@ public class ServerDetailActivity extends Activity {
         tv_detail_title.setText(serverUser.getTitle());
         tv_detail_exPoint.setText(serverUser.getExchangePoint() + "积分/次");
         tv_detail_content.setText(serverUser.getContent());
+        if (SYSVALUE.currentUser.getId() == serverUser.getCreaterId()) {
+            bt_edit.setVisibility(View.VISIBLE);
+            ll_others_handle.setVisibility(View.GONE);
+        } else {
+            bt_edit.setVisibility(View.GONE);
+            ll_others_handle.setVisibility(View.VISIBLE);
+        }
     }
 
     public void findView() {
@@ -90,6 +175,8 @@ public class ServerDetailActivity extends Activity {
         tv_detail_title = (TextView) findViewById(R.id.tv_detail_title);
         tv_detail_exPoint = (TextView) findViewById(R.id.tv_detail_exPoint);
         tv_detail_content = (TextView) findViewById(R.id.tv_detail_content);
+        ll_others_handle = (LinearLayout) findViewById(R.id.ll_others_handle);
+        bt_edit = (Button) findViewById(R.id.bt_edit);
     }
 
     public void back(View v) {

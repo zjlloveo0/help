@@ -4,11 +4,15 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 
+import com.zjlloveo0.help.model.Orders;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.ObjectOutputStream;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -86,6 +90,33 @@ public class Request2Server {
         return s;
     }
 
+    public static String getParamters(Object o) throws Exception {
+        StringBuffer sb = new StringBuffer();
+        if (o != null) {
+            Field[] fields = o.getClass().getDeclaredFields();
+            String fieldName;
+            String firstLetter;
+            String getter;
+            for (int i = 0; i < fields.length; i++) {
+                fieldName = fields[i].getName();
+                firstLetter = fieldName.substring(0, 1).toUpperCase();
+                getter = "get" + firstLetter + fieldName.substring(1);
+                Method method = o.getClass().getMethod(getter);
+                Object value = method.invoke(o);
+                if (value != null && !"".equals(value.toString())) {
+                    if (sb.toString().equals("")) {
+                        sb.append("?");
+                    } else if (!sb.toString().equals("?")) {
+                        sb.append("&");
+                    }
+                    sb.append(fieldName);
+                    sb.append("=");
+                    sb.append(value.toString());
+                }
+            }
+        }
+        return sb.toString();
+    }
     public static Bitmap getBitMapFromUrl(String url) {
         URL myFileUrl = null;
         Bitmap bitmap = null;

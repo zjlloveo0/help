@@ -179,29 +179,47 @@
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-
         <Button
-            android:id="@+id/bt_talkToHe"
-            app:backgroundTint="@color/colorPrimary"
+            android:id="@+id/bt_edit"
+            android:visibility="gone"
+            android:text="编辑服务"
             android:backgroundTint="@color/colorPrimary"
-            android:text="和Ta聊聊"
-            android:onClick="talkToHeDetail"
-            android:textSize="20sp"
+            app:backgroundTint="@color/colorPrimary"
             android:textColor="@color/white"
-            android:layout_weight="1"
-            android:layout_width="wrap_content"
+            android:textSize="20sp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
-        <Button
-            android:id="@+id/bt_use_this"
-            app:backgroundTint="@color/colorPrimary"
-            android:backgroundTint="@color/colorPrimary"
-            android:text="使用服务"
-            android:onClick="useServer"
-            android:textSize="20sp"
-            android:textColor="@color/white"
-            android:layout_weight="1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+        <LinearLayout
+            android:id="@+id/ll_others_handle"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:id="@+id/bt_talkToHe"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:backgroundTint="@color/colorPrimary"
+                app:backgroundTint="@color/colorPrimary"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:onClick="talkToHeDetail"
+                android:text="和Ta聊聊" />
+
+            <Button
+                android:id="@+id/bt_use_this"
+                app:backgroundTint="@color/colorPrimary"
+                android:backgroundTint="@color/colorPrimary"
+                android:text="使用服务"
+                android:onClick="useServer"
+                android:textSize="20sp"
+                android:textColor="@color/white"
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
     </LinearLayout>
 </LinearLayout>

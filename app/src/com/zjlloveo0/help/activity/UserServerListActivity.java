@@ -17,6 +17,7 @@ import android.widget.Toast;
 import com.loopj.android.image.SmartImageView;
 import com.zjlloveo0.help.R;
 import com.zjlloveo0.help.model.ServerUser;
+import com.zjlloveo0.help.other.CustomRefreshListView;
 import com.zjlloveo0.help.utils.Request2Server;
 import com.zjlloveo0.help.utils.SYSVALUE;
 

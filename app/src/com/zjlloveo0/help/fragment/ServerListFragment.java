@@ -13,13 +13,12 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.loopj.android.image.SmartImageView;
 import com.zjlloveo0.help.R;
-import com.zjlloveo0.help.activity.CustomRefreshListView;
+import com.zjlloveo0.help.other.CustomRefreshListView;
 import com.zjlloveo0.help.activity.ServerDetailActivity;
 import com.zjlloveo0.help.model.ServerUser;
 import com.zjlloveo0.help.utils.SYSVALUE;
