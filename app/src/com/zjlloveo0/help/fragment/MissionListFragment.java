@@ -20,9 +20,10 @@ import com.loopj.android.image.SmartImageView;
 import com.zjlloveo0.help.R;
 import com.zjlloveo0.help.other.CustomRefreshListView;
 import com.zjlloveo0.help.activity.MissionDetailActivity;
-import com.zjlloveo0.help.model.MissionUser;
+import com.zjlloveo0.help.bean.MissionUser;
 import com.zjlloveo0.help.utils.Request2Server;
 import com.zjlloveo0.help.utils.SYSVALUE;
+import com.zjlloveo0.help.utils.SystemUtil;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -183,7 +184,7 @@ public class MissionListFragment extends Fragment {
 
                 JSONObject result = null;
                 try {
-                    result = new JSONObject(Request2Server.getRequsetResult(HOST + "findMissionUser?isEnable=1"));
+                    result = new JSONObject(Request2Server.getRequsetResult(HOST + "findMissionUser?isEnable=1&state=0"));
                     if (result.getInt("code") > 0) {
                         JSONArray objs = result.getJSONArray("content");
                         for (int i = 0; i < objs.length(); i++) {
@@ -204,13 +205,13 @@ public class MissionListFragment extends Fragment {
                             missionUser.setId(id.equals("null") ? null : Integer.valueOf(id));
                             missionUser.setCreaterId(createrId.equals("null") ? null : Integer.valueOf(createrId));
                             missionUser.setReceiverId(receiverId.equals("null") ? null : Integer.valueOf(receiverId));
-                            missionUser.setCreateTime(new Date(obj.getString("createTime")));
-                            missionUser.setFinishTime(finishTime.equals("null") ? null : new Date(finishTime));
+                            missionUser.setCreateTime(SystemUtil.convert(obj.getString("createTime")));
+                            missionUser.setFinishTime(SystemUtil.convert(finishTime));
                             missionUser.setTitle(obj.getString("title"));
                             missionUser.setContent(obj.getString("content"));
                             missionUser.setExchangePoint(exchangePoint.equals("null") ? null : Integer.valueOf(exchangePoint));
                             missionUser.setIsEnable(isEnable.equals("null") ? null : Integer.valueOf(isEnable));
-                            missionUser.setUpdateTime(new Date(obj.getString("updateTime")));
+                            missionUser.setUpdateTime(SystemUtil.convert(obj.getString("updateTime")));
                             missionUser.setImg(obj.getString("img"));
 
                             missionUserList1.add(missionUser);

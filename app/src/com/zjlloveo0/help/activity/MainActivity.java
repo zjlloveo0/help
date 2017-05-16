@@ -1,5 +1,6 @@
 package com.zjlloveo0.help.activity;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -28,18 +29,22 @@ import com.netease.nimlib.sdk.msg.MsgService;
 import com.netease.nimlib.sdk.msg.MsgServiceObserve;
 import com.netease.nimlib.sdk.msg.constant.SessionTypeEnum;
 import com.netease.nimlib.sdk.msg.model.IMMessage;
+import com.xiaomi.mipush.sdk.MiPushClient;
 import com.zjlloveo0.help.R;
 import com.zjlloveo0.help.fragment.MineFragment;
 import com.zjlloveo0.help.fragment.MissionListFragment;
 import com.zjlloveo0.help.fragment.ServerListFragment;
+import com.zjlloveo0.help.utils.InitApplication;
+import com.zjlloveo0.help.utils.SYSVALUE;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class MainActivity extends AppCompatActivity {
-    private Button bt_add_service;
-    private Button bt_add_mission;
     private Snackbar snackBar;
+    FloatingActionButton fab;
+    public static List<String> logList = new CopyOnWriteArrayList<String>();
 
     //tab
     private FragmentTabHost mTabHost;
@@ -59,19 +64,23 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        InitApplication.setMainActivity(this);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-
+        MiPushClient.setAlias(getApplicationContext(), SYSVALUE.currentUser.getId() + "", null);
         setSupportActionBar(toolbar);
-        bt_add_service=(Button)findViewById(R.id.bt_add_service);
-        bt_add_mission=(Button)findViewById(R.id.bt_add_mission);
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab = (FloatingActionButton) findViewById(R.id.fab_add);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                snackBar = Snackbar.make(view, "", Snackbar.LENGTH_SHORT);
-                addViewToSnackBar(snackBar,R.layout.snackbar_new_mission,0);
-                setSnackBarColor(snackBar, Color.alpha(0));
-                snackBar.show();
+                if (snackBar != null && snackBar.isShown()) {
+                    snackBar.dismiss();
+                } else {
+                    snackBar = Snackbar.make(view, "", Snackbar.LENGTH_SHORT);
+                    addViewToSnackBar(snackBar, R.layout.snackbar_new_mission, 0);
+                    setSnackBarColor(snackBar, Color.alpha(0));
+                    snackBar.show();
+                }
+
             }
         });
 
@@ -115,13 +124,17 @@ public class MainActivity extends AppCompatActivity {
 
     public void sendMsg(View v) {
         // 创建文本消息
-        IMMessage message = MessageBuilder.createTextMessage(
-                "zjlloveo0", // 聊天对象的 ID，如果是单聊，为用户帐号，如果是群聊，为群组 ID
-                SessionTypeEnum.P2P, // 聊天类型，单聊或群组
-                "你好！" // 文本内容
-        );
-        // 发送消息。如果需要关心发送结果，可设置回调函数。发送完成时，会收到回调。如果失败，会有具体的错误码。
-        NIMClient.getService(MsgService.class).sendMessage(message, false);
+//        IMMessage message = MessageBuilder.createTextMessage(
+//                "zjlloveo0", // 聊天对象的 ID，如果是单聊，为用户帐号，如果是群聊，为群组 ID
+//                SessionTypeEnum.P2P, // 聊天类型，单聊或群组
+//                "你好！" // 文本内容
+//        );
+//        // 发送消息。如果需要关心发送结果，可设置回调函数。发送完成时，会收到回调。如果失败，会有具体的错误码。
+//        NIMClient.getService(MsgService.class).sendMessage(message, false);
+
+        Intent intent = new Intent();
+        intent.setClass(getApplicationContext(), MissionOrdersActivity.class);
+        startActivity(intent);
     }
 
     //tab TODO:tab
@@ -200,6 +213,26 @@ public class MainActivity extends AppCompatActivity {
 
         });
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        refreshLogInfo();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        InitApplication.setMainActivity(null);
+    }
+
+
+    public void refreshLogInfo() {
+        String AllLog = "";
+        for (String log : logList) {
+            AllLog = AllLog + log + "\n\n";
+        }
     }
 
 }

@@ -20,9 +20,10 @@ import com.loopj.android.image.SmartImageView;
 import com.zjlloveo0.help.R;
 import com.zjlloveo0.help.other.CustomRefreshListView;
 import com.zjlloveo0.help.activity.ServerDetailActivity;
-import com.zjlloveo0.help.model.ServerUser;
+import com.zjlloveo0.help.bean.ServerUser;
 import com.zjlloveo0.help.utils.SYSVALUE;
 import com.zjlloveo0.help.utils.Request2Server;
+import com.zjlloveo0.help.utils.SystemUtil;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -199,13 +200,13 @@ public class ServerListFragment extends Fragment {
                             serverUser.setCreaterImg(obj.getString("createrImg"));
                             serverUser.setId(id.equals("null") ? null : Integer.valueOf(id));
                             serverUser.setCreaterId(createrId.equals("null") ? null : Integer.valueOf(createrId));
-                            serverUser.setCreateTime(new Date(obj.getString("createTime")));
+                            serverUser.setCreateTime(SystemUtil.convert(obj.getString("createTime")));
                             serverUser.setTitle(obj.getString("title"));
                             serverUser.setContent(obj.getString("content"));
                             serverUser.setExchangePoint(exchangePoint.equals("null") ? null : Integer.valueOf(exchangePoint));
                             serverUser.setCreaterPoint(createrPoint.equals("null") ? null : Integer.valueOf(createrPoint));
                             serverUser.setIsEnable(isEnable.equals("null") ? null : Integer.valueOf(isEnable));
-                            serverUser.setUpdateTime(new Date(obj.getString("updateTime")));
+                            serverUser.setUpdateTime(SystemUtil.convert(obj.getString("updateTime")));
                             serverUser.setImg(obj.getString("img"));
 
                             serverUserList1.add(serverUser);

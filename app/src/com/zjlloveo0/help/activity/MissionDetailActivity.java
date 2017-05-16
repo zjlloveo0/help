@@ -1,21 +1,28 @@
 package com.zjlloveo0.help.activity;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.loopj.android.image.SmartImageView;
 import com.netease.nim.uikit.NimUIKit;
 import com.zjlloveo0.help.R;
 import com.zjlloveo0.help.fragment.MissionListFragment;
-import com.zjlloveo0.help.model.MissionUser;
+import com.zjlloveo0.help.bean.MissionUser;
 import com.zjlloveo0.help.utils.Request2Server;
 import com.zjlloveo0.help.utils.SYSVALUE;
+
+import org.json.JSONObject;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -31,10 +38,22 @@ public class MissionDetailActivity extends Activity {
     private TextView tv_mission_detail_title;
     private TextView tv_mission_detail_exPoint;
     private TextView tv_mission_detail_content;
-    private Button bt_use_this;
     String HOST = SYSVALUE.HOST;
+    private StringBuffer reqeust;
     private MissionUser missionUser;
-
+    private Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case 0:
+                    Toast.makeText(getApplicationContext(), msg.obj.toString(), Toast.LENGTH_SHORT).show();
+                    break;
+                case 1:
+                    changeOrdersState();
+                    break;
+            }
+        }
+    };
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,30 +83,66 @@ public class MissionDetailActivity extends Activity {
     }
 
     public void applyMission(View view) {
+        reqeust = new StringBuffer();
+        reqeust.append("updateMission?id=" + missionUser.getId());
+        reqeust.append("&receiverId=" + SYSVALUE.currentUser.getId());
+        reqeust.append("&state=1");
+        dialogMsg("注意", "确定要完成这个任务吗?");
+
     }
 
-    /**
-     * isEnable
-     * 是否可用
-     * 0 不可用
-     * 1 可用
-     * 2 已接受未完成
-     * 3 已完成未评价
-     * 4 已完成已评价
-     */
+    private void dialogMsg(String title, String msg) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);  //先得到构造器
+        builder.setTitle(title); //设置标题
+        builder.setMessage(msg); //设置内容
+        builder.setIcon(R.drawable.tab_service_a);//设置图标，图片id即可
+        builder.setPositiveButton("确认", new DialogInterface.OnClickListener() { //设置确定按钮
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Message msg = handler.obtainMessage();
+                msg.what = 1;
+                handler.sendMessage(msg);
+                dialog.dismiss(); //关闭dialog
+            }
+        });
+        builder.setNegativeButton("取消", new DialogInterface.OnClickListener() { //设置取消按钮
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        //参数都设置完成了，创建并显示出来
+        builder.create().show();
+    }
+
+    public void changeOrdersState() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                String result = "";
+                Message msg = handler.obtainMessage();
+                try {
+                    result = Request2Server.getRequsetResult(HOST + reqeust.toString());
+                    msg.what = 0;
+                    msg.obj = (new JSONObject(result)).getString("content");
+                    handler.sendMessage(msg);
+                } catch (Exception e) {
+                    msg.what = 0;
+                    msg.obj = "系统异常";
+                    handler.sendMessage(msg);
+                    e.printStackTrace();
+                }
+
+            }
+        }).start();
+    }
     public void initView() {
         missionUser = getIntent().getParcelableExtra(MissionListFragment.PAR_KEY);
 
         if (missionUser.getReceiverId() != null && missionUser.getReceiverId() != 0) {
             ll_receiver.setVisibility(View.VISIBLE);
-            if (missionUser.getIsEnable() == 2) {
-                bt_use_this.setText("我能更好的帮TA");
-            } else if (missionUser.getIsEnable() > 2) {
-                bt_use_this.setVisibility(View.GONE);
-            }
         } else {
             ll_receiver.setVisibility(View.GONE);
-            bt_use_this.setText("我要帮TA");
         }
         iv_mission_detail_image.setImageUrl(HOST + missionUser.getImg());
         new Thread(new Runnable() {
@@ -130,7 +185,6 @@ public class MissionDetailActivity extends Activity {
         tv_mission_detail_title = (TextView) findViewById(R.id.tv_mission_detail_title);
         tv_mission_detail_exPoint = (TextView) findViewById(R.id.tv_mission_detail_exPoint);
         tv_mission_detail_content = (TextView) findViewById(R.id.tv_mission_detail_content);
-        bt_use_this = (Button) findViewById(R.id.bt_use_this);
     }
 
     public void back(View v) {

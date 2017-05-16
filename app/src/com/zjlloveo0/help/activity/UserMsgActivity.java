@@ -5,18 +5,16 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.loopj.android.image.SmartImageView;
 import com.netease.nim.uikit.NimUIKit;
 import com.zjlloveo0.help.R;
-import com.zjlloveo0.help.fragment.ServerListFragment;
-import com.zjlloveo0.help.model.ServerUser;
-import com.zjlloveo0.help.model.UserSchool;
+import com.zjlloveo0.help.bean.UserSchool;
 import com.zjlloveo0.help.utils.Request2Server;
 import com.zjlloveo0.help.utils.SYSVALUE;
+import com.zjlloveo0.help.utils.SystemUtil;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -70,9 +68,9 @@ public class UserMsgActivity extends Activity {
             @Override
             public void run() {
                 String res = "";
+                long startTime = System.currentTimeMillis();
                 res = Request2Server.getRequsetResult(HOST + "findUserSchool?id=" + userID);
                 try {
-                    long startTime = System.currentTimeMillis();
                     while ("".equals(res)) {
                         Thread.sleep(1000);
                         if (System.currentTimeMillis() - startTime > 10000L) {
@@ -108,7 +106,6 @@ public class UserMsgActivity extends Activity {
                             String isEnable = obj.getString("isEnable");
                             isEnable = ("".equals(isEnable) || isEnable == null) ? "0" : isEnable;
                             String updateTime = obj.getString("updateTime");
-                            updateTime = ("".equals(updateTime) || updateTime == null) ? "0" : updateTime;
                             String schoolName = obj.getString("schoolName");
                             String collegeName = obj.getString("collegeName");
                             String createMissionNum = obj.getString("createMissionNum");
@@ -126,7 +123,7 @@ public class UserMsgActivity extends Activity {
                             userSchool.setCollegeId((collegeId == null || "".equals(collegeId) || "null".equals(collegeId)) ? 0 : Integer.valueOf(collegeId));
                             userSchool.setStar((star == null || "".equals(star) || "null".equals(star)) ? 0 : Integer.valueOf(star));
                             userSchool.setIsEnable((isEnable == null || "".equals(isEnable) || "null".equals(isEnable)) ? 0 : Integer.valueOf(isEnable));
-                            userSchool.setUpdateTime(new Date(updateTime));
+                            userSchool.setUpdateTime(SystemUtil.convert(updateTime));
                             userSchool.setSchoolName(schoolName);
                             userSchool.setCollegeName(collegeName);
                             userSchool.setCreateMissionNum((createMissionNum == null || "".equals(createMissionNum) || "null".equals(createMissionNum)) ? 0 : Integer.valueOf(createMissionNum));
@@ -135,7 +132,9 @@ public class UserMsgActivity extends Activity {
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    iv_user_msg_image.setImageUrl(HOST + userSchool.getImg());
+                                    if (!(userSchool.getImg() == null || "".equals(userSchool.getImg()) || "null".equals(userSchool.getImg()))) {
+                                        iv_user_msg_image.setImageUrl(HOST + userSchool.getImg());
+                                    }
                                     iv_user_msg_head.setImageBitmap(headImg);
                                     tv_user_msg_name.setText(userSchool.getName());
                                     tv_user_msg_school.setText(userSchool.getSchoolName() + "-" + userSchool.getCollegeName());

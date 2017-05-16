@@ -12,6 +12,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.zjlloveo0.help.R;
+import com.zjlloveo0.help.utils.SystemUtil;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -343,8 +344,7 @@ public class CustomRefreshListView extends ListView implements AbsListView.OnScr
      * @return
      */
     private String getCurrentTime() {
-        SimpleDateFormat format = new SimpleDateFormat("yyyy年MM月dd日 HH:mm:ss");
-        return format.format(new Date());
+        return SystemUtil.formatDate(new Date());
     }
 
     private OnRefreshListener listener;

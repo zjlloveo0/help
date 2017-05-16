@@ -8,7 +8,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -33,15 +32,14 @@ import com.netease.nimlib.sdk.RequestCallback;
 import com.netease.nimlib.sdk.auth.AuthService;
 import com.netease.nimlib.sdk.auth.LoginInfo;
 import com.zjlloveo0.help.R;
-import com.zjlloveo0.help.model.UserSchool;
+import com.zjlloveo0.help.bean.UserSchool;
 import com.zjlloveo0.help.utils.Request2Server;
 import com.zjlloveo0.help.utils.SYSVALUE;
+import com.zjlloveo0.help.utils.SystemUtil;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Date;
-import java.util.Random;
 
 import cn.smssdk.EventHandler;
 import cn.smssdk.SMSSDK;
@@ -324,7 +322,7 @@ public class LoginActivity extends AppCompatActivity implements ActivityCompat.O
                             currentUser.setPassword(jsonObj.getString("password"));
                             currentUser.setImg(jsonObj.getString("img"));
                             currentUser.setStuNum(jsonObj.getString("stuNum"));
-                            currentUser.setUpdateTime(new Date(jsonObj.getString("updateTime")));
+                            currentUser.setUpdateTime(SystemUtil.convert(jsonObj.getString("updateTime")));
                             currentUser.setSchoolName(jsonObj.getString("schoolName"));
                             currentUser.setCollegeName(jsonObj.getString("collegeName"));
                             SYSVALUE.currentUser = currentUser;

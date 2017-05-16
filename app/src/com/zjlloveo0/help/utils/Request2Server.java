@@ -2,9 +2,6 @@ package com.zjlloveo0.help.utils;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.os.AsyncTask;
-
-import com.zjlloveo0.help.model.Orders;
 
 import java.io.BufferedReader;
 import java.io.IOException;

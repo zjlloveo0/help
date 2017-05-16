@@ -55,12 +55,12 @@
     <include layout="@layout/content_main" />
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab"
-        app:fabSize="mini"
+        android:id="@+id/fab_add"
         android:src="@drawable/new_mission"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom|center"
-        android:layout_marginBottom="@dimen/fab_margin" />
+        android:layout_gravity="bottom|end"
+        android:layout_marginRight="@dimen/fab_margin"
+        android:layout_marginBottom="80dp" />
 
 </android.support.design.widget.CoordinatorLayout>
