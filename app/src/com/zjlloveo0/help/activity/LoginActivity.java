@@ -27,12 +27,18 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.netease.nim.uikit.common.activity.UI;
+import com.netease.nim.uikit.permission.MPermission;
+import com.netease.nim.uikit.permission.annotation.OnMPermissionDenied;
+import com.netease.nim.uikit.permission.annotation.OnMPermissionGranted;
 import com.netease.nimlib.sdk.NIMClient;
 import com.netease.nimlib.sdk.RequestCallback;
 import com.netease.nimlib.sdk.auth.AuthService;
 import com.netease.nimlib.sdk.auth.LoginInfo;
 import com.zjlloveo0.help.R;
 import com.zjlloveo0.help.bean.UserSchool;
+import com.zjlloveo0.help.config.preference.Preferences;
+import com.zjlloveo0.help.utils.DemoCache;
 import com.zjlloveo0.help.utils.Request2Server;
 import com.zjlloveo0.help.utils.SYSVALUE;
 import com.zjlloveo0.help.utils.SystemUtil;
@@ -48,11 +54,12 @@ import cn.smssdk.SMSSDK;
 /**
  * A login screen that offers login via email/password.
  */
-public class LoginActivity extends AppCompatActivity implements ActivityCompat.OnRequestPermissionsResultCallback {
+public class LoginActivity extends UI {
 
     /**
      * Keep track of the login task to ensure we can cancel it if requested.
      */
+    private static final String KICK_OUT = "KICK_OUT";
     private UserLoginTask mAuthTask = null;
     private UserSchool currentUser = null;
     private int nimLoginRe;//默认0 成功1 密码错误2 异常3
@@ -73,6 +80,7 @@ public class LoginActivity extends AppCompatActivity implements ActivityCompat.O
     private boolean trueCheckNum = false;
     private EventHandler eh;
     private Thread checkTimer;
+    private final int BASIC_PERMISSION_REQUEST_CODE = 1100;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -287,7 +295,7 @@ public class LoginActivity extends AppCompatActivity implements ActivityCompat.O
                 SMSSDK.getVerificationCode("86", mAccountView.getText().toString().trim());
             }
         });
-        getPermission();
+        requestBasicPermission();
     }
 
     private int loginToServer(final String mAccount, final String mPassword) {
@@ -607,17 +615,25 @@ public class LoginActivity extends AppCompatActivity implements ActivityCompat.O
                     new RequestCallback<LoginInfo>() {
                         @Override
                         public void onSuccess(LoginInfo loginInfo) {
+                            DemoCache.setAccount(currentUser.getId() + "");
                             saveLoginInfo(mPhone, mPassword);
                             nimLoginRe = 1;
                         }
                         @Override
-                        public void onFailed(int i) {
+                        public void onFailed(int code) {
+                            if (code == 302 || code == 404) {
+                                Toast.makeText(LoginActivity.this, "账号或密码错误", Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(LoginActivity.this, "登录失败: " + code, Toast.LENGTH_SHORT).show();
+                            }
+                            mAccountView.setError(null);
                             saveLoginInfo("", "");
                             currentUser = null;
                             nimLoginRe=2;
                         }
                         @Override
                         public void onException(Throwable throwable) {
+                            Toast.makeText(LoginActivity.this, "系统异常", Toast.LENGTH_SHORT).show();
                             nimLoginRe=3;
                             currentUser = null;
                             saveLoginInfo("", "");
@@ -668,38 +684,36 @@ public class LoginActivity extends AppCompatActivity implements ActivityCompat.O
         }
     }
 
-    private void saveLoginInfo(String account, String password) {
-        SharedPreferences.Editor editor = getSharedPreferences("LoginInfo", Context.MODE_PRIVATE).edit();
-        editor.putString("account", account);
-        editor.putString("token", password);
-        editor.commit();
+    private void saveLoginInfo(String account, String token) {
+        Preferences.saveUserAccount(account);
+        Preferences.saveUserToken(token);
     }
 
-    public void getPermission() {
-        SharedPreferences sp = getSharedPreferences("LoginInfo", Context.MODE_PRIVATE);
-        if (!sp.getBoolean("isFirst", true)) {
-            readLoginInfo();
-            return;
-        }
-        int PERMISSION_REQUEST_CODE = 1;
-        String[] permissions = new String[2];
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (checkSelfPermission(Manifest.permission.READ_SMS)
-                    == PackageManager.PERMISSION_DENIED) {
-                permissions[0] = Manifest.permission.READ_SMS;
-            }
-            if (checkSelfPermission(Manifest.permission.READ_PHONE_STATE)
-                    == PackageManager.PERMISSION_DENIED) {
-                permissions[1] = Manifest.permission.READ_PHONE_STATE;
-            }
-            requestPermissions(permissions, PERMISSION_REQUEST_CODE);
-        }
-
-        SharedPreferences.Editor editor = getSharedPreferences("LoginInfo", Context.MODE_PRIVATE).edit();
-        editor.putBoolean("isFirst", false);
-        editor.commit();
-    }
+    //    public void getPermission() {
+//        SharedPreferences sp = getSharedPreferences("LoginInfo", Context.MODE_PRIVATE);
+//        if (!sp.getBoolean("isFirst", true)) {
+//            readLoginInfo();
+//            return;
+//        }
+//        int PERMISSION_REQUEST_CODE = 1;
+//        String[] permissions = new String[2];
+//
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+//            if (checkSelfPermission(Manifest.permission.READ_SMS)
+//                    == PackageManager.PERMISSION_DENIED) {
+//                permissions[0] = Manifest.permission.READ_SMS;
+//            }
+//            if (checkSelfPermission(Manifest.permission.READ_PHONE_STATE)
+//                    == PackageManager.PERMISSION_DENIED) {
+//                permissions[1] = Manifest.permission.READ_PHONE_STATE;
+//            }
+//            requestPermissions(permissions, PERMISSION_REQUEST_CODE);
+//        }
+//
+//        SharedPreferences.Editor editor = getSharedPreferences("LoginInfo", Context.MODE_PRIVATE).edit();
+//        editor.putBoolean("isFirst", false);
+//        editor.commit();
+//    }
     private void readLoginInfo() {
         SharedPreferences sp=getSharedPreferences("LoginInfo", Context.MODE_PRIVATE);
         String account="";
@@ -741,26 +755,78 @@ public class LoginActivity extends AppCompatActivity implements ActivityCompat.O
         return phoneNum;
     }
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        switch (requestCode) {
-            case 1:
-                if (grantResults[1] == PackageManager.PERMISSION_GRANTED) {
-                    // 同意授权
-                    String localPhone = getPhoneNum();
-                    SharedPreferences.Editor editor = getSharedPreferences("LoginInfo", Context.MODE_PRIVATE).edit();
-                    mAccountView.setText(localPhone);
-                    editor.putString("localPhone", localPhone);
-                    editor.commit();
-                } else {
-                    // 不同意授权
-                    showToast("用户拒绝接受权限");
-                }
-                break;
-            default:
-                super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        }
+    private void requestBasicPermission() {
+        MPermission.with(LoginActivity.this)
+                .addRequestCode(BASIC_PERMISSION_REQUEST_CODE)
+                .permissions(
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                        Manifest.permission.READ_EXTERNAL_STORAGE,
+                        Manifest.permission.CAMERA,
+                        Manifest.permission.READ_PHONE_STATE,
+                        Manifest.permission.READ_SMS,
+                        Manifest.permission.RECORD_AUDIO,
+                        Manifest.permission.ACCESS_COARSE_LOCATION,
+                        Manifest.permission.ACCESS_FINE_LOCATION,
+                        Manifest.permission.ACCESS_LOCATION_EXTRA_COMMANDS
+                )
+                .request();
     }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        MPermission.onRequestPermissionsResult(this, requestCode, permissions, grantResults);
+    }
+
+    @OnMPermissionGranted(BASIC_PERMISSION_REQUEST_CODE)
+    public void onBasicPermissionSuccess() {
+        SharedPreferences sp = getSharedPreferences("LoginInfo", Context.MODE_PRIVATE);
+        if (!sp.getBoolean("isFirst", true)) {
+            readLoginInfo();
+            return;
+        }
+        String localPhone = getPhoneNum();
+        SharedPreferences.Editor editor = getSharedPreferences("LoginInfo", Context.MODE_PRIVATE).edit();
+        mAccountView.setText(localPhone);
+        editor.putString("localPhone", localPhone);
+        editor.putBoolean("isFirst", false);
+        editor.commit();
+        Toast.makeText(this, "授权成功", Toast.LENGTH_SHORT).show();
+    }
+
+    @OnMPermissionDenied(BASIC_PERMISSION_REQUEST_CODE)
+    public void onBasicPermissionFailed() {
+        Toast.makeText(this, "授权失败", Toast.LENGTH_SHORT).show();
+    }
+
+    //    @Override
+//    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+//        switch (requestCode) {
+//            case 1:
+//                if (grantResults[1] == PackageManager.PERMISSION_GRANTED) {
+//                    // 同意授权
+//                    String localPhone = getPhoneNum();
+//                    SharedPreferences.Editor editor = getSharedPreferences("LoginInfo", Context.MODE_PRIVATE).edit();
+//                    mAccountView.setText(localPhone);
+//                    editor.putString("localPhone", localPhone);
+//                    editor.commit();
+//                } else {
+//                    // 不同意授权
+//                    showToast("用户拒绝接受权限");
+//                }
+//                break;
+//            default:
+//                super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+//        }
+//    }
+    public static void start(Context context) {
+        start(context, false);
+    }
+
+    public static void start(Context context, boolean kickOut) {
+        Intent intent = new Intent(context, LoginActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        intent.putExtra(KICK_OUT, kickOut);
+        context.startActivity(intent);
+    }
 }
 

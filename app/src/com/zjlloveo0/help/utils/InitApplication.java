@@ -29,8 +29,8 @@ import com.xiaomi.mipush.sdk.MiPushClient;
 import com.zjlloveo0.help.R;
 import com.zjlloveo0.help.activity.MainActivity;
 import com.zjlloveo0.help.activity.MissionOrdersDetailActivity;
-import com.zjlloveo0.help.activity.ServerDetailActivity;
 import com.zjlloveo0.help.activity.ServerOrdersDetailActivity;
+import com.zjlloveo0.help.location.NimDemoLocationProvider;
 
 import java.util.List;
 
@@ -49,6 +49,7 @@ public class InitApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        DemoCache.setContext(this);
         //小米推送
         // 注册push服务，注册成功后会向DemoMessageReceiver发送广播
         // 可以从DemoMessageReceiver的onCommandResult方法中MiPushCommandMessage对象参数中获取注册信息
@@ -83,6 +84,7 @@ public class InitApplication extends Application {
         if (inMainProcess()) {
             // 在主进程中初始化UI组件，判断所属进程方法请参见demo源码。
             NimUIKit.init(this);
+            NimUIKit.setLocationProvider(new NimDemoLocationProvider());
         }
     }
 

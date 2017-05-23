@@ -61,4 +61,21 @@
     <string name="title_activity_mission_orders">MissionOrdersActivity</string>
     <string name="action_settings">Settings</string>
     <string name="section_format">Hello World from section: %1$d</string>
+
+    <string name="location_loading">正在定位</string>
+    <string name="location_map">地图定位</string>
+    <string name="location_address_unkown">该位置信息暂无</string>
+    <string name="location_navigate">导航</string>
+    <string name="my_location">我的位置</string>
+    <string name="format_mylocation">我的位置：%s</string>
+    <string name="location_address_fail">获取位置信息失败</string>
+    <string name="tools_selected">选择工具</string>
+    <string name="friends_map_navigation_web">在网页中打开</string>
+    <string name="location_open_map_error">打开地图出错</string>
+
+    <string name="user_info_update_success">设置成功</string>
+    <string name="user_info_update_cancel">取消更新</string>
+    <string name="user_info_update_failed">设置失败，请重试</string>
+    <string name="head_update_success">头像设置成功</string>
+    <string name="head_update_failed">头像设置失败，请重试</string>
 </resources>

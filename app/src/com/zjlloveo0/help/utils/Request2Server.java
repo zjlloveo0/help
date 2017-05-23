@@ -2,8 +2,11 @@ package com.zjlloveo0.help.utils;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.util.Log;
+import android.widget.TextView;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -13,11 +16,25 @@ import java.lang.reflect.Method;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Map;
+import java.util.concurrent.TimeUnit;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
+
+import static java.lang.String.valueOf;
 
 /**
  * Created by zjlloveo0 on 20.
  */
 public class Request2Server {
+    public static String res = "";
     public static String getRequsetResult(String u) {
         String s = "";
         try {
@@ -131,5 +148,25 @@ public class Request2Server {
             e.printStackTrace();
         }
         return bitmap;
+    }
+
+    public static void uploadFile(File file, String url, Map<String, Object> map, Callback mCallback) {
+        res = "";
+        OkHttpClient client = new OkHttpClient();
+        MultipartBody.Builder requestBody = new MultipartBody.Builder().setType(MultipartBody.FORM);
+        if (file != null) {
+            RequestBody body = RequestBody.create(MediaType.parse("image/*"), file);
+            // 参数分别为， 请求key ，文件名称 ， RequestBody
+            requestBody.addFormDataPart("file", file.getName(), body);
+        }
+        if (map != null) {
+            // map 里面是请求中所需要的 key 和 value
+            for (Map.Entry entry : map.entrySet()) {
+                requestBody.addFormDataPart(valueOf(entry.getKey()), valueOf(entry.getValue()));
+            }
+        }
+        Request request = new Request.Builder().url(url).post(requestBody.build()).tag(null).build();
+        // readTimeout("请求超时时间" , 时间单位);
+        client.newBuilder().readTimeout(60000, TimeUnit.MILLISECONDS).build().newCall(request).enqueue(mCallback);
     }
 }

@@ -36,6 +36,10 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.READ_SMS" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
     <uses-permission android:name="android.permission.GET_TASKS" />
     <uses-permission android:name="android.permission.VIBRATE" />
 
@@ -59,6 +63,7 @@
     <!-- 接收 SDK 消息广播权限， 第三方 APP 接入时，请将 com.netease.nim.demo 替换为自己的包名 -->
     <uses-permission android:name="com.zjlloveo0.help.permission.RECEIVE_MSG" />
 
+
     <application
         android:name=".utils.InitApplication"
         android:allowBackup="true"
@@ -67,14 +72,24 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".activity.LoginActivity"
-            android:label="@string/app_name">
+            android:name=".activity.WelcomeActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:hardwareAccelerated="true"
+            android:label="@string/app_name"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/WelcomeEntranceActionBarTheme"
+            android:windowSoftInputMode="adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.MULTIWINDOW_LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".activity.LoginActivity"
+            android:label="@string/app_name"></activity>
         <activity android:name=".activity.ServerDetailActivity" />
         <activity android:name=".activity.UserMsgActivity" />
         <activity android:name=".activity.UserServerListActivity" />
@@ -83,6 +98,18 @@
         <activity android:name=".activity.ServerOrdersActivity" />
         <activity android:name=".activity.ServerOrdersDetailActivity" />
         <activity android:name=".activity.MissionOrdersDetailActivity" />
+        <activity
+            android:name=".location.activity.LocationAmapActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:label="定位"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".location.activity.NavigationAmapActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:label="@string/location_navigate"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activity.MainActivity"
             android:theme="@style/AppTheme.NoActionBar" />
@@ -190,6 +217,14 @@
             android:name=".activity.MissionOrdersActivity"
             android:label="@string/title_activity_mission_orders"
             android:theme="@style/AppTheme.NoActionBar" />
+
+        <meta-data
+            android:name="com.amap.api.v2.apikey"
+            android:value="4a295e808e5f4b912ffcf8e64ee1473e" />
+        <uses-library
+            android:name="com.google.android.maps"
+            android:required="false" />
+        <service android:name="com.amap.api.location.APSService"></service>
     </application>
 
 </manifest>

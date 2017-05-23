@@ -6,4 +6,7 @@
     <dimen name="layout_padding">10dp</dimen>
     <dimen name="detail_txt_size">24sp</dimen>
     <dimen name="appbar_padding_top">8dp</dimen>
+
+
+    <dimen name="friend_map_bound_padding">80dp</dimen>
 </resources>

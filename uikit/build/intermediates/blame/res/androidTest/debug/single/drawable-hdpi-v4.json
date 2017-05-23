@@ -608,12 +608,12 @@
         "source": "C:\\Users\\zjlloveo0\\.android\\build-cache\\812d1274e1b1604e3dcee5538b7f203b0b981213\\output\\res\\drawable-hdpi-v4\\abc_btn_check_to_on_mtrl_015.png"
     },
     {
-        "merged": "D:\\Project\\Android\\help\\uikit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-hdpi-v4\\nim_arrow_right.png",
-        "source": "D:\\Project\\Android\\help\\uikit\\build\\intermediates\\bundles\\debug\\res\\drawable-hdpi-v4\\nim_arrow_right.png"
-    },
-    {
         "merged": "D:\\Project\\Android\\help\\uikit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-hdpi-v4\\nim_actionbar_dark_back_icon.xml",
         "source": "D:\\Project\\Android\\help\\uikit\\build\\intermediates\\bundles\\debug\\res\\drawable-hdpi-v4\\nim_actionbar_dark_back_icon.xml"
+    },
+    {
+        "merged": "D:\\Project\\Android\\help\\uikit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-hdpi-v4\\nim_arrow_right.png",
+        "source": "D:\\Project\\Android\\help\\uikit\\build\\intermediates\\bundles\\debug\\res\\drawable-hdpi-v4\\nim_arrow_right.png"
     },
     {
         "merged": "D:\\Project\\Android\\help\\uikit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-hdpi-v4\\abc_textfield_default_mtrl_alpha.9.png",

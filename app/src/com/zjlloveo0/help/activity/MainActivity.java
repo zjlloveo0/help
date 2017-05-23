@@ -1,8 +1,12 @@
 package com.zjlloveo0.help.activity;
 
+import android.Manifest;
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Message;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
@@ -21,6 +25,9 @@ import android.widget.TabHost;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.netease.nim.uikit.permission.MPermission;
+import com.netease.nim.uikit.permission.annotation.OnMPermissionDenied;
+import com.netease.nim.uikit.permission.annotation.OnMPermissionGranted;
 import com.netease.nim.uikit.recent.RecentContactsFragment;
 import com.netease.nimlib.sdk.NIMClient;
 import com.netease.nimlib.sdk.Observer;
@@ -34,6 +41,7 @@ import com.zjlloveo0.help.R;
 import com.zjlloveo0.help.fragment.MineFragment;
 import com.zjlloveo0.help.fragment.MissionListFragment;
 import com.zjlloveo0.help.fragment.ServerListFragment;
+import com.zjlloveo0.help.utils.DemoCache;
 import com.zjlloveo0.help.utils.InitApplication;
 import com.zjlloveo0.help.utils.SYSVALUE;
 
@@ -46,6 +54,13 @@ public class MainActivity extends AppCompatActivity {
     FloatingActionButton fab;
     public static List<String> logList = new CopyOnWriteArrayList<String>();
 
+    private static final int PICK_AVATAR_REQUEST = 0x0E;
+    //图片
+    private static final String EXTRA_APP_QUIT = "APP_QUIT";
+    private static final int REQUEST_CODE_NORMAL = 1;
+    private static final int REQUEST_CODE_ADVANCED = 2;
+    private static final String TAG = MainActivity.class.getSimpleName();
+    private final int BASIC_PERMISSION_REQUEST_CODE = 100;
     //tab
     private FragmentTabHost mTabHost;
     private ViewPager mViewPager;
@@ -66,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         InitApplication.setMainActivity(this);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        MiPushClient.setAlias(getApplicationContext(), SYSVALUE.currentUser.getId() + "", null);
+        MiPushClient.setAlias(getApplicationContext(), DemoCache.getAccount(), null);//SYSVALUE.currentUser.getId() +
         setSupportActionBar(toolbar);
         fab = (FloatingActionButton) findViewById(R.id.fab_add);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -86,7 +101,9 @@ public class MainActivity extends AppCompatActivity {
 
         init();
         test();
+        requestBasicPermission();
     }
+
 
     public void test() {
         Observer<List<IMMessage>> incomingMessageObserver =
@@ -122,22 +139,6 @@ public class MainActivity extends AppCompatActivity {
         Toast.makeText(getApplicationContext(),"2222",Toast.LENGTH_SHORT).show();
     }
 
-    public void sendMsg(View v) {
-        // 创建文本消息
-//        IMMessage message = MessageBuilder.createTextMessage(
-//                "zjlloveo0", // 聊天对象的 ID，如果是单聊，为用户帐号，如果是群聊，为群组 ID
-//                SessionTypeEnum.P2P, // 聊天类型，单聊或群组
-//                "你好！" // 文本内容
-//        );
-//        // 发送消息。如果需要关心发送结果，可设置回调函数。发送完成时，会收到回调。如果失败，会有具体的错误码。
-//        NIMClient.getService(MsgService.class).sendMessage(message, false);
-
-        Intent intent = new Intent();
-        intent.setClass(getApplicationContext(), MissionOrdersActivity.class);
-        startActivity(intent);
-    }
-
-    //tab TODO:tab
     private void init() {
 
         initView();
@@ -172,6 +173,36 @@ public class MainActivity extends AppCompatActivity {
                 return mFragmentList.size();
             }
         });
+    }
+
+    private void requestBasicPermission() {
+        MPermission.with(MainActivity.this)
+                .addRequestCode(BASIC_PERMISSION_REQUEST_CODE)
+                .permissions(
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                        Manifest.permission.READ_EXTERNAL_STORAGE,
+                        Manifest.permission.CAMERA,
+                        Manifest.permission.READ_PHONE_STATE,
+                        Manifest.permission.RECORD_AUDIO,
+                        Manifest.permission.ACCESS_COARSE_LOCATION,
+                        Manifest.permission.ACCESS_FINE_LOCATION
+                )
+                .request();
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        MPermission.onRequestPermissionsResult(this, requestCode, permissions, grantResults);
+    }
+
+    @OnMPermissionGranted(BASIC_PERMISSION_REQUEST_CODE)
+    public void onBasicPermissionSuccess() {
+        Toast.makeText(this, "授权成功", Toast.LENGTH_SHORT).show();
+    }
+
+    @OnMPermissionDenied(BASIC_PERMISSION_REQUEST_CODE)
+    public void onBasicPermissionFailed() {
+        Toast.makeText(this, "授权失败", Toast.LENGTH_SHORT).show();
     }
 
     private View getTabView(int index) {
@@ -235,4 +266,26 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    public static void start(Context context) {
+        start(context, null);
+    }
+
+    public static void start(Context context, Intent extras) {
+        Intent intent = new Intent();
+        intent.setClass(context, MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        if (extras != null) {
+            intent.putExtras(extras);
+        }
+        context.startActivity(intent);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode == Activity.RESULT_OK && requestCode == PICK_AVATAR_REQUEST) {
+            MineFragment.path = data.getStringExtra(com.netease.nim.uikit.session.constant.Extras.EXTRA_FILE_PATH);
+        }
+    }
 }
