@@ -26,7 +26,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="200dp"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/server_default" />
+                    android:src="@drawable/head_default" />
 
                 <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
                     android:id="@+id/iv_user_msg_head"
@@ -57,15 +57,6 @@
                     android:textColor="@color/black"
                     android:textSize="26sp" />
 
-                <TextView
-                    android:id="@+id/tv_user1"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:gravity="center"
-                    android:text="昵称"
-                    android:textColor="@color/black"
-                    android:textSize="26sp" />
 
                 <View
                     android:layout_marginTop="5dp"

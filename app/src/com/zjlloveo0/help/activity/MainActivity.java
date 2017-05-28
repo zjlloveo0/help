@@ -4,6 +4,7 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Message;
@@ -43,11 +44,14 @@ import com.zjlloveo0.help.fragment.MissionListFragment;
 import com.zjlloveo0.help.fragment.ServerListFragment;
 import com.zjlloveo0.help.utils.DemoCache;
 import com.zjlloveo0.help.utils.InitApplication;
+import com.zjlloveo0.help.utils.Request2Server;
 import com.zjlloveo0.help.utils.SYSVALUE;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MainActivity extends AppCompatActivity {
     private Snackbar snackBar;
@@ -66,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
     private ViewPager mViewPager;
     private List<Fragment> mFragmentList;
     private Class mClass[] = {ServerListFragment.class, MissionListFragment.class, RecentContactsFragment.class, MineFragment.class};
-    private Fragment mFragment[] = {new ServerListFragment(), new MissionListFragment(), new RecentContactsFragment(), new MineFragment()};
+    public Fragment mFragment[] = {new ServerListFragment(), new MissionListFragment(), new RecentContactsFragment(), new MineFragment()};
     private String mTitles[] = {"找服务", "去帮忙", "消息", "我的"};
     private int mImages[] = {
             R.drawable.tab_service,
@@ -100,22 +104,10 @@ public class MainActivity extends AppCompatActivity {
         });
 
         init();
-        test();
         requestBasicPermission();
     }
 
 
-    public void test() {
-        Observer<List<IMMessage>> incomingMessageObserver =
-                new Observer<List<IMMessage>>() {
-                    @Override
-                    public void onEvent(List<IMMessage> messages) {
-                        Toast.makeText(getApplicationContext(), messages.get(0).getContent(), Toast.LENGTH_SHORT).show();
-                    }
-                };
-        NIMClient.getService(MsgServiceObserve.class)
-                .observeReceiveMessage(incomingMessageObserver, true);
-    }
     public void setSnackBarColor(Snackbar snackbar, int backgroundColor) {
         View view = snackbar.getView();
         if (view != null) {
@@ -132,11 +124,21 @@ public class MainActivity extends AppCompatActivity {
     }
     public void addService(View v){
         snackBar.dismiss();
-        Toast.makeText(getApplicationContext(),"1111",Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(MainActivity.this, AddAndModfiyActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putString("addOrModify", "add");
+        bundle.putString("type", "server");
+        intent.putExtras(bundle);
+        startActivity(intent);
     }
     public void addMission(View v){
         snackBar.dismiss();
-        Toast.makeText(getApplicationContext(),"2222",Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(MainActivity.this, AddAndModfiyActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putString("addOrModify", "add");
+        bundle.putString("type", "mission");
+        intent.putExtras(bundle);
+        startActivity(intent);
     }
 
     private void init() {
@@ -197,7 +199,7 @@ public class MainActivity extends AppCompatActivity {
 
     @OnMPermissionGranted(BASIC_PERMISSION_REQUEST_CODE)
     public void onBasicPermissionSuccess() {
-        Toast.makeText(this, "授权成功", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, "授权成功", Toast.LENGTH_SHORT).show();
     }
 
     @OnMPermissionDenied(BASIC_PERMISSION_REQUEST_CODE)

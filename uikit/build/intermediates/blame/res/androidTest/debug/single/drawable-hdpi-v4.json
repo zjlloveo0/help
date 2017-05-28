@@ -24,12 +24,12 @@
         "source": "D:\\Project\\Android\\help\\uikit\\build\\intermediates\\bundles\\debug\\res\\drawable-hdpi-v4\\nim_team_member_delete_normal.png"
     },
     {
-        "merged": "D:\\Project\\Android\\help\\uikit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-hdpi-v4\\nim_new_message_notify.png",
-        "source": "D:\\Project\\Android\\help\\uikit\\build\\intermediates\\bundles\\debug\\res\\drawable-hdpi-v4\\nim_new_message_notify.png"
-    },
-    {
         "merged": "D:\\Project\\Android\\help\\uikit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-hdpi-v4\\nim_icon_reddot.png",
         "source": "D:\\Project\\Android\\help\\uikit\\build\\intermediates\\bundles\\debug\\res\\drawable-hdpi-v4\\nim_icon_reddot.png"
+    },
+    {
+        "merged": "D:\\Project\\Android\\help\\uikit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-hdpi-v4\\nim_new_message_notify.png",
+        "source": "D:\\Project\\Android\\help\\uikit\\build\\intermediates\\bundles\\debug\\res\\drawable-hdpi-v4\\nim_new_message_notify.png"
     },
     {
         "merged": "D:\\Project\\Android\\help\\uikit\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-hdpi-v4\\nim_icon_download_pause.png",

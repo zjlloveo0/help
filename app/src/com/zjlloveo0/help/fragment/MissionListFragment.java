@@ -1,6 +1,7 @@
 package com.zjlloveo0.help.fragment;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -115,7 +116,7 @@ public class MissionListFragment extends Fragment {
 
             @Override
             public void onLoadingMore() {
-                Toast.makeText(getContext(), "加载", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getContext(), "加载", Toast.LENGTH_SHORT).show();
             }
         });
         return mRootView;
@@ -166,6 +167,7 @@ public class MissionListFragment extends Fragment {
             } else {
                 holder = (ViewHolder) convertView.getTag();
             }
+            holder.tv_mission_username.setBackgroundColor(Color.argb(144, 144, 144, 144));
             holder.missionUser = missionUserList.get(position);
             holder.iv_mission_image.setImageUrl(HOST + missionUserList.get(position).getImg());
             holder.tv_mission_username.setText(missionUserList.get(position).getCreaterName());
@@ -195,13 +197,17 @@ public class MissionListFragment extends Fragment {
                             String createrId = obj.getString("createrId");
                             String receiverId = obj.getString("receiverId");
                             String exchangePoint = obj.getString("exchangePoint");
+                            String createrPoint = obj.getString("createrPoint");
+                            String receiverPoint = obj.getString("receiverPoint");
                             String isEnable = obj.getString("isEnable");
                             String finishTime = obj.getString("finishTime");
 
                             missionUser.setCreaterName(obj.getString("createrName"));
                             missionUser.setCreaterImg(obj.getString("createrImg"));
+                            missionUser.setCreaterPoint(createrPoint.equals("null") ? 0 : Integer.valueOf(createrPoint));
                             missionUser.setReceiverName(obj.getString("receiverName"));
                             missionUser.setReceiverImg(obj.getString("receiverImg"));
+                            missionUser.setReceiverPoint(receiverPoint.equals("null") ? 0 : Integer.valueOf(receiverPoint));
                             missionUser.setId(id.equals("null") ? null : Integer.valueOf(id));
                             missionUser.setCreaterId(createrId.equals("null") ? null : Integer.valueOf(createrId));
                             missionUser.setReceiverId(receiverId.equals("null") ? null : Integer.valueOf(receiverId));

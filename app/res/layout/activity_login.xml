@@ -5,10 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:gravity="center_horizontal"
     android:orientation="vertical"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
+    android:padding="40dp"
     tools:context="com.zjlloveo0.help.activity.LoginActivity">
 
     <!-- Login progress -->
@@ -90,7 +87,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:visibility="gone"
-                    android:hint="昵称"
+                    android:hint="姓名"
                     android:maxLength="20"
                     android:maxLines="1"
                     android:singleLine="true" />

@@ -117,7 +117,7 @@ public class ServerOrdersCreateFragment extends Fragment {
 
             @Override
             public void onLoadingMore() {
-                Toast.makeText(getContext(), "加载", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getContext(), "加载", Toast.LENGTH_SHORT).show();
             }
         });
         return mRootView;
@@ -237,10 +237,4 @@ public class ServerOrdersCreateFragment extends Fragment {
         }).start();
         return oList1;
     }
-
-//    @Override
-//    public void onHiddenChanged(boolean hidden) {
-//        Log.v("666", "Server onHiddenChanged" + hidden);
-//        updateData();
-//    }
 }

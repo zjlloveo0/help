@@ -98,6 +98,7 @@
         <activity android:name=".activity.ServerOrdersActivity" />
         <activity android:name=".activity.ServerOrdersDetailActivity" />
         <activity android:name=".activity.MissionOrdersDetailActivity" />
+        <activity android:name=".activity.AddAndModfiyActivity" />
         <activity
             android:name=".location.activity.LocationAmapActivity"
             android:configChanges="keyboardHidden|orientation"

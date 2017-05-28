@@ -1,8 +1,10 @@
 package com.zjlloveo0.help.fragment;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
@@ -21,6 +23,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.choose.view.SelectAddressDialog;
+import com.choose.view.myinterface.SelectAddressInterface;
 import com.loopj.android.image.SmartImageView;
 import com.netease.nim.uikit.common.media.picker.PickImageHelper;
 import com.netease.nim.uikit.common.ui.dialog.DialogMaker;
@@ -33,6 +37,8 @@ import com.netease.nimlib.sdk.ResponseCode;
 import com.netease.nimlib.sdk.nos.NosService;
 import com.netease.nimlib.sdk.uinfo.constant.UserInfoFieldEnum;
 import com.zjlloveo0.help.R;
+import com.zjlloveo0.help.activity.LoginActivity;
+import com.zjlloveo0.help.activity.MainActivity;
 import com.zjlloveo0.help.activity.MissionOrdersActivity;
 import com.zjlloveo0.help.activity.ServerOrdersActivity;
 import com.zjlloveo0.help.bean.UserSchool;
@@ -49,14 +55,17 @@ import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.zip.Inflater;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
 
+import static com.zjlloveo0.help.R.id.et_content;
 
-public class MineFragment extends Fragment implements View.OnClickListener {
+
+public class MineFragment extends Fragment implements View.OnClickListener, SelectAddressInterface {
 
     private View mRootView;
     private SmartImageView iv_user_msg_image;
@@ -81,9 +90,9 @@ public class MineFragment extends Fragment implements View.OnClickListener {
     protected static final int CHOOSE_PICTURE = 0;
     protected static final int TAKE_PICTURE = 1;
     private static final int CROP_SMALL_PICTURE = 2;
-    protected static Uri tempUri;
     private UserSchool userSchool;
     private Bitmap headImg;
+    SelectAddressDialog dialog;
     String HOST = SYSVALUE.HOST;
     public Handler handler = new Handler() {
         @Override
@@ -96,8 +105,16 @@ public class MineFragment extends Fragment implements View.OnClickListener {
                     setValue();
                     break;
                 case 2:
+                    Map<String, Object> map2 = new HashMap<String, Object>();
+                    map2.put("id", DemoCache.getAccount());
+                    map2.put("stuNum", msg.obj.toString());
+                    Request2Server.request(HOST + "updateUser", map2, mCallback);
                     break;
                 case 3:
+                    Map<String, Object> map3 = new HashMap<String, Object>();
+                    map3.put("id", DemoCache.getAccount());
+                    map3.put("password", msg.obj.toString());
+                    Request2Server.request(HOST + "updateUser", map3, mCallback);
                     break;
             }
         }
@@ -110,6 +127,12 @@ public class MineFragment extends Fragment implements View.OnClickListener {
 
         @Override
         public void onResponse(Call call, Response response) throws IOException {
+            handler.post(new Runnable() {
+                @Override
+                public void run() {
+                    Toast.makeText(getContext(), "信息修改成功", Toast.LENGTH_SHORT).show();
+                }
+            });
             initView();
         }
     };
@@ -140,15 +163,72 @@ public class MineFragment extends Fragment implements View.OnClickListener {
     }
 
     public void setSchool() {
-        dialogInput("设置学校", "学校信息", 2);
+        if (dialog == null) {
+            dialog = new SelectAddressDialog(getActivity(),
+                    this, SelectAddressDialog.STYLE_TWO, null);
+        }
+        dialog.showDialog();
     }
 
     public void setStuNum() {
-        dialogInput("设置学号", "请输入学号", 3);
+        dialogInput("设置学号", "请输入学号", 2);
     }
 
     public void setPassword() {
-        dialogInput("设置学校", "学校信息", 4);
+        final View v = getActivity().getLayoutInflater().inflate(R.layout.reset_password, null);
+        final EditText et_old = (EditText) v.findViewById(R.id.et_old_password);
+        final EditText et_pass = (EditText) v.findViewById(R.id.et_new_password);
+        final EditText et_pass2 = (EditText) v.findViewById(R.id.et_new_password2);
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setTitle("修改密码");
+        builder.setView(v);
+        builder.setIcon(R.drawable.tab_mine_b);
+        builder.setNegativeButton("取消", null);
+        builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                String s = et_old.getText().toString();
+                String s1 = et_pass.getText().toString();
+                String s2 = et_pass2.getText().toString();
+                if (s.equals(SYSVALUE.currentUser.getPassword())) {
+                    boolean cancel = false;
+                    String res = "";
+                    if (TextUtils.isEmpty(s1)) {
+                        cancel = true;
+                        res = "新密码不能为空！";
+                    } else if (!s1.matches(SYSVALUE.REGEX_PASSWORD)) {
+                        cancel = true;
+                        res = "密码至少6位，且应包含字母或者数字";
+                    } else if (!s1.equals(s2)) {
+                        cancel = true;
+                        res = "两次密码不一致！";
+                    }
+                    final String ss = res;
+                    if (cancel) {
+                        handler.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(getContext(), ss, Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    } else {
+                        String result = s1;
+                        Message msg = handler.obtainMessage();
+                        msg.what = 3;
+                        msg.obj = result;
+                        handler.sendMessage(msg);
+                    }
+                } else {
+                    handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(getContext(), "旧密码不正确！", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                    return;
+                }
+            }
+        });
+        builder.create().show();
     }
 
     public void setHeadImg() {
@@ -164,16 +244,25 @@ public class MineFragment extends Fragment implements View.OnClickListener {
     }
 
     public void logOut() {
-        Toast.makeText(getContext(), "", Toast.LENGTH_SHORT).show();
+        SharedPreferences.Editor editor = getActivity().getSharedPreferences("LoginInfo", Context.MODE_PRIVATE).edit();
+        editor.putString("id", "");
+        editor.putString("loginPhone", "");
+        editor.putString("password", "");
+        editor.commit();
+        DemoCache.clear();
+        getActivity().startActivity(new Intent(getContext(), LoginActivity.class));
+        getActivity().finish();
     }
 
     public void setValue() {
         if (!(userSchool.getImg() == null || "".equals(userSchool.getImg()) || "null".equals(userSchool.getImg()))) {
             iv_user_msg_image.setImageUrl(HOST + userSchool.getImg());
         }
-        iv_user_msg_head.setImageBitmap(headImg);
+        if (headImg != null) {
+            iv_user_msg_head.setImageBitmap(headImg);
+        }
         tv_user_msg_name.setText(userSchool.getName());
-        tv_user_msg_school.setText(userSchool.getSchoolName() + "-" + userSchool.getCollegeName());
+        tv_user_msg_school.setText(userSchool.getSchoolInfo());
         tv_user_msg_num.setText(userSchool.getStuNum());
         tv_user_msg_point.setText(userSchool.getPoint() + "");
         tv_user_msg_phone.setText(userSchool.getPhone());
@@ -248,6 +337,7 @@ public class MineFragment extends Fragment implements View.OnClickListener {
                             String id = obj.getString("id");
                             id = ("".equals(id) || id == null) ? "0" : id;
                             String name = obj.getString("name");
+                            String schoolInfo = obj.getString("schoolInfo");
                             String phone = obj.getString("phone");
                             String password = obj.getString("password");
                             String img = obj.getString("img");
@@ -270,6 +360,7 @@ public class MineFragment extends Fragment implements View.OnClickListener {
                             us = new UserSchool();
                             us.setId(Integer.valueOf(id));
                             us.setName(name);
+                            us.setSchoolInfo(schoolInfo);
                             us.setPhone(phone);
                             us.setPassword(password);
                             us.setImg(img);
@@ -283,7 +374,9 @@ public class MineFragment extends Fragment implements View.OnClickListener {
                             us.setCollegeName(collegeName);
                             us.setCreateMissionNum((createMissionNum == null || "".equals(createMissionNum) || "null".equals(createMissionNum)) ? 0 : Integer.valueOf(createMissionNum));
                             us.setCreateServerNum((createServerNum == null || "".equals(createServerNum) || "null".equals(createServerNum)) ? 0 : Integer.valueOf(createServerNum));
-                            headImg = Request2Server.getBitMapFromUrl(HOST + us.getImg());
+                            if (us.getImg() != null && !"".equals(us.getImg()) && !"null".equals(us.getImg())) {
+                                headImg = Request2Server.getBitMapFromUrl(HOST + us.getImg());
+                            }
                             userSchool = us;
                             Message msg = handler.obtainMessage();
                             msg.what = 1;
@@ -342,7 +435,7 @@ public class MineFragment extends Fragment implements View.OnClickListener {
 
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("type", "head");
-        map.put("uId", DemoCache.getAccount() + "");
+        map.put("uId", DemoCache.getAccount());
         Request2Server.uploadFile(file, HOST + "fileUpload", map, mCallback);
         DialogMaker.showProgressDialog(getContext(), null, null, true, new DialogInterface.OnCancelListener() {
             @Override
@@ -406,7 +499,7 @@ public class MineFragment extends Fragment implements View.OnClickListener {
         et_content.setHint(hint);
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         builder.setTitle(title);
-        builder.setIcon(R.drawable.tab_mine_a);
+        builder.setIcon(R.drawable.tab_mine_b);
         builder.setView(et_content);
         builder.setNegativeButton("取消", null);
         builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
@@ -422,4 +515,12 @@ public class MineFragment extends Fragment implements View.OnClickListener {
         builder.create().show();
     }
 
+    @Override
+    public void setAreaString(String area) {
+        tv_user_msg_school.setText(area);
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("id", DemoCache.getAccount());
+        map.put("schoolInfo", area);
+        Request2Server.request(HOST + "updateUser", map, mCallback);
+    }
 }

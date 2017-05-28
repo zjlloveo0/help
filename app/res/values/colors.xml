@@ -9,4 +9,6 @@
     <color name="titleColorSelected">#12b6f6</color>
 
     <color name="color_blue_3a9efb">#3a9efb</color>
+    <color name="color_line_border">#C7C7C7</color>
+    <color name="colorBlack_Three">#333333</color>
 </resources>

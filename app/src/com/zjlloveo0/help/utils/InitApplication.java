@@ -12,6 +12,7 @@ import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.os.Process;
+//import android.support.multidex.MultiDex;
 import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
@@ -30,6 +31,7 @@ import com.zjlloveo0.help.R;
 import com.zjlloveo0.help.activity.MainActivity;
 import com.zjlloveo0.help.activity.MissionOrdersDetailActivity;
 import com.zjlloveo0.help.activity.ServerOrdersDetailActivity;
+import com.zjlloveo0.help.fragment.MineFragment;
 import com.zjlloveo0.help.location.NimDemoLocationProvider;
 
 import java.util.List;
@@ -227,6 +229,13 @@ public class InitApplication extends Application {
                         intent.putExtras(bundle);
                         context.startActivity(intent);
                         break;
+                    case SYSVALUE.MISSION_ORDERS_DETAIL:
+                        intent.setClass(context, MissionOrdersDetailActivity.class);
+                        Bundle bun = new Bundle();
+                        bun.putString("missionId", msg.obj.toString());
+                        intent.putExtras(bun);
+                        context.startActivity(intent);
+                        break;
                 }
             } else if (msg.what == 1) {//刷新数据
                 switch (msg.arg1) {
@@ -235,14 +244,19 @@ public class InitApplication extends Application {
                             sServerOrdersDetailActivity.getData();
                         }
                         break;
+                    case SYSVALUE.MINE_DETAIL:
+                        if (sMainActivity != null) {
+                            MineFragment m = (MineFragment) sMainActivity.mFragment[3];
+                            m.initView();
+                        }
+                        break;
                 }
 
             }
-            String s = (String) msg.obj;
-            if (!TextUtils.isEmpty(s)) {
-                Toast.makeText(context, s, Toast.LENGTH_SHORT).show();
-            }
+//            String s = (String) msg.obj;
+//            if (!TextUtils.isEmpty(s)) {
+//                Toast.makeText(context, s, Toast.LENGTH_SHORT).show();
+//            }
         }
     }
-
 }

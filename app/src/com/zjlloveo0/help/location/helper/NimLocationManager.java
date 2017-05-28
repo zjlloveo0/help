@@ -7,15 +7,12 @@ import android.location.Criteria;
 import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
-import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
 
 import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationListener;
-//import com.amap.api.location.LocationManagerProxy;
-//import com.amap.api.location.LocationProviderProxy;
 import com.zjlloveo0.help.common.infra.TaskExecutor;
 import com.zjlloveo0.help.location.model.NimLocation;
 import com.netease.nim.uikit.common.util.log.LogUtil;
@@ -214,28 +211,5 @@ public class NimLocationManager implements AMapLocationListener {
         return ret;
     }
 
-    public void deactive() {
-        stopAMapLocation();
-    }
 
-    private void stopAMapLocation() {
-//        if (aMapLocationManager != null) {
-//            aMapLocationManager.removeUpdates(this);
-//            aMapLocationManager.destory();
-//        }
-//        aMapLocationManager = null;
-    }
-
-    public void activate() {
-        requestAmapLocation();
-    }
-
-    private void requestAmapLocation() {
-//        if (aMapLocationManager == null) {
-//            aMapLocationManager = LocationManagerProxy.getInstance(mContext);
-//            aMapLocationManager.setGpsEnable(false);
-//            aMapLocationManager.requestLocationData(
-//                    LocationProviderProxy.AMapNetwork, 30 * 1000, 10, this);
-//        }
-    }
 }

@@ -45,7 +45,7 @@ public class UserSchool extends User implements Serializable {
 
     @Override
     public String toString() {
-        return "{\"id\":" + getId() + ",\"name\":\"" + getName()
+        return "{\"id\":" + getId() + ",\"name\":\"" + getName() + ",\"schoolInfo\":\"" + getSchoolInfo()
                 + "\",\"phone\":\"" + getPhone() + "\",\"password\":\""
                 + getPassword() + "\",\"img\":\"" + getImg()
                 + "\",\"stuNum\":\"" + getStuNum() + "\",\"point\":"

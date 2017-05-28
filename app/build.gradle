@@ -20,23 +20,23 @@ android {
     compileSdkVersion 23
     buildToolsVersion "25.0.2"
     defaultConfig {
-//        multiDexEnabled true
+        multiDexEnabled true
         applicationId "com.zjlloveo0.help"
         minSdkVersion 15
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+//        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         ndk {
             //设置支持的SO库架构
             abiFilters "armeabi-v7a", "x86", "arm64-v8a", "x86_64"
         }
     }
-//    buildTypes {
-//        release {
-//            minifyEnabled false
-//            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-//        }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
 //        debug {
 //            signingConfig signingConfigs.debug
 //            manifestPlaceholders = [AMAP_KEY: "09fd4efd3e28e9bf1f449ecec7d34bfe"]
@@ -50,7 +50,7 @@ android {
 //            manifestPlaceholders = [AMAP_KEY: "ee20324fba1c7f4ad7a4a207e7f08e8d"]
 //        }
 
-//    }
+    }
     sourceSets {
         main {
             manifest.srcFile 'AndroidManifest.xml'
@@ -69,19 +69,19 @@ dependencies {
     compile fileTree(include: '*.jar', dir: 'libs')
     compile name: 'SMSSDK-2.1.4', ext: 'aar'
     // 基础功能 (必需)
-    compile 'com.netease.nimlib:basesdk:3.4.0'
+//    compile 'com.netease.nimlib:basesdk:3.4.0'
     // 音视频需要
-    compile 'com.netease.nimlib:avchat:3.4.0'
+//    compile 'com.netease.nimlib:avchat:3.4.0'
     // 聊天室需要
-    compile 'com.netease.nimlib:chatroom:3.4.0'
+//    compile 'com.netease.nimlib:chatroom:3.4.0'
     // 实时会话服务需要
-    compile 'com.netease.nimlib:rts:3.4.0'
+//    compile 'com.netease.nimlib:rts:3.4.0'
     // 全文检索服务需要
-    compile 'com.netease.nimlib:lucene:3.4.0'
+//    compile 'com.netease.nimlib:lucene:3.4.0'
     compile project(path: ':uikit')
     compile 'de.hdodenhof:circleimageview:2.1.0'
-    compile 'com.android.support:appcompat-v7:23.3.0'
-    compile 'com.android.support:design:23.3.0'
+//    compile 'com.android.support:appcompat-v7:23.3.0'
+//    compile 'com.android.support:design:23.3.0'
     compile 'com.android.support.constraint:constraint-layout:1.0.1'
     compile 'com.android.support:support-v4:23.3.0'
     compile files('libs/AMap_Location_V3.4.0_20170427.jar')

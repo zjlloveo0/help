@@ -115,7 +115,7 @@ public class LoginActivity extends UI {
                                 @Override
                                 public void run() {
                                     trueCheckNum = true;
-                                    et_checkNum.setError("", filedLegal);
+                                    et_checkNum.setError("验证通过", filedLegal);
                                     et_checkNum.setEnabled(false);
                                     bt_getCheckNum.setEnabled(false);
                                     showToast("验证通过！" + mAccountView.getText().toString() + "为诚信号码，无须验证短信！");
@@ -296,6 +296,7 @@ public class LoginActivity extends UI {
             }
         });
         requestBasicPermission();
+        readLoginInfo();
     }
 
     private int loginToServer(final String mAccount, final String mPassword) {
@@ -326,6 +327,7 @@ public class LoginActivity extends UI {
                             currentUser.setCreateMissionNum(createMissionNum.equals("null") ? null : Integer.valueOf(createMissionNum));
                             currentUser.setCreateServerNum(createServerNum.equals("null") ? null : Integer.valueOf(createServerNum));
                             currentUser.setName(jsonObj.getString("name"));
+                            currentUser.setSchoolInfo(jsonObj.getString("schoolInfo"));
                             currentUser.setPhone(jsonObj.getString("phone"));
                             currentUser.setPassword(jsonObj.getString("password"));
                             currentUser.setImg(jsonObj.getString("img"));
@@ -334,6 +336,9 @@ public class LoginActivity extends UI {
                             currentUser.setSchoolName(jsonObj.getString("schoolName"));
                             currentUser.setCollegeName(jsonObj.getString("collegeName"));
                             SYSVALUE.currentUser = currentUser;
+                            DemoCache.setAccount(String.valueOf(currentUser.getId()));
+                            DemoCache.setHeadImg(currentUser.getImg());
+                            saveLoginInfo(String.valueOf(currentUser.getId()), currentUser.getPhone(), currentUser.getPassword(), getPhoneNum());
                             resLogin = 1;
                             break;//登录成功
                         case 106:
@@ -384,8 +389,8 @@ public class LoginActivity extends UI {
         mName.setError(null);
         et_checkNum.setError(null);
 
-        String phone = mAccountView.getText().toString();
-        String password = mPasswordView.getText().toString();
+        final String phone = mAccountView.getText().toString();
+        final String password = mPasswordView.getText().toString();
         String rePassword = mRePWD.getText().toString();
         String checkNum = et_checkNum.getText().toString();
         String name = mName.getText().toString();
@@ -397,7 +402,7 @@ public class LoginActivity extends UI {
             et_checkNum.setError(getString(R.string.error_field_required));
             focusView = et_checkNum;
             cancel = true;
-        } else if (!isCheckNumValid(checkNum)) {
+        } else if (!isCheckNumValid(checkNum) && !trueCheckNum) {
             et_checkNum.setError("验证码为四位数字");
             focusView = et_checkNum;
             cancel = true;
@@ -455,10 +460,6 @@ public class LoginActivity extends UI {
                     JSONObject requestRes;
                     try {
                         requestRes = new JSONObject(Request2Server.getRequsetResult(SYSVALUE.HOST + "reg?phone=" + mAccountView.getText() + "&password=" + mPasswordView.getText() + "&name=" + mName.getText()));
-                        //{"code":200,"content":{"code":200,"info":{"token":"111s111","accid":"13253375511","name":"123"}}}
-                        //{"code":105,"content":"密码格式错误！"}
-                        //{"code":104,"content":"手机号格式错误！"}
-                        //{"code":112,"content":"您填写的用户信息不完整！"}
                         if (requestRes.getInt("code") == 200) {
                             JSONObject jsonObj = requestRes.getJSONObject("content");
                             if (jsonObj.getInt("code") == 200) {
@@ -466,10 +467,11 @@ public class LoginActivity extends UI {
                                 currentUser = new UserSchool();
                                 currentUser.setName(obj.getString("name"));
                                 currentUser.setId(Integer.valueOf(obj.getString("accid")));
-                                currentUser.setPassword(obj.getString("token"));
                                 showToast(currentUser.getName() + " 恭喜您注册成功！");
-                                mAuthTask = new UserLoginTask(currentUser.getId().toString(), currentUser.getPassword(), mAccountView.getText().toString().trim());
-                                mAuthTask.execute((Void) null);
+                                if (loginToServer(phone, password) == 1) {
+                                    mAuthTask = new UserLoginTask(String.valueOf(currentUser.getId()), "11111q");
+                                    mAuthTask.execute((Void) null);
+                                }
                             }
                         } else {
                             showToast(requestRes.getString("content"));
@@ -527,7 +529,7 @@ public class LoginActivity extends UI {
         } else {
             showProgress(true);
             if (loginToServer(account, password) == 1) {
-                mAuthTask = new UserLoginTask(currentUser.getId().toString(), password, currentUser.getPhone());
+                mAuthTask = new UserLoginTask(String.valueOf(currentUser.getId()), "11111q");
                 mAuthTask.execute((Void) null);
             } else {
                 showProgress(false);
@@ -552,9 +554,6 @@ public class LoginActivity extends UI {
      */
     @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
     private void showProgress(final boolean show) {
-        // On Honeycomb MR2 we have the ViewPropertyAnimator APIs, which allow
-        // for very easy animations. If available, use these APIs to fade-in
-        // the progress spinner.
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
             int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
 
@@ -576,8 +575,6 @@ public class LoginActivity extends UI {
                 }
             });
         } else {
-            // The ViewPropertyAnimator APIs are not available, so simply show
-            // and hide the relevant UI components.
             mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
             mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
         }
@@ -599,12 +596,10 @@ public class LoginActivity extends UI {
 
         private final String mAccount;
         private final String mPassword;
-        private final String mPhone;
 
-        UserLoginTask(String account, String password, String phone) {
+        UserLoginTask(String account, String password) {
             mAccount = account;
             mPassword = password;
-            mPhone = phone;
         }
         @Override
         protected Boolean doInBackground(Void... params) {
@@ -615,19 +610,12 @@ public class LoginActivity extends UI {
                     new RequestCallback<LoginInfo>() {
                         @Override
                         public void onSuccess(LoginInfo loginInfo) {
-                            DemoCache.setAccount(currentUser.getId() + "");
-                            saveLoginInfo(mPhone, mPassword);
                             nimLoginRe = 1;
                         }
                         @Override
                         public void onFailed(int code) {
-                            if (code == 302 || code == 404) {
-                                Toast.makeText(LoginActivity.this, "账号或密码错误", Toast.LENGTH_SHORT).show();
-                            } else {
-                                Toast.makeText(LoginActivity.this, "登录失败: " + code, Toast.LENGTH_SHORT).show();
-                            }
                             mAccountView.setError(null);
-                            saveLoginInfo("", "");
+                            saveLoginInfo("", "", "", getPhoneNum());
                             currentUser = null;
                             nimLoginRe=2;
                         }
@@ -636,7 +624,7 @@ public class LoginActivity extends UI {
                             Toast.makeText(LoginActivity.this, "系统异常", Toast.LENGTH_SHORT).show();
                             nimLoginRe=3;
                             currentUser = null;
-                            saveLoginInfo("", "");
+                            saveLoginInfo("", "", "", getPhoneNum());
                         }
                     };
 
@@ -652,12 +640,10 @@ public class LoginActivity extends UI {
                     }
                 }
             } catch (InterruptedException e) {
-                showToast(getString(R.string.system_error));
                 currentUser = null;
                 nimLoginRe = 3;
             }
             if(nimLoginRe==1){
-                showToast(getString(R.string.login_success));
                 startActivity(new Intent(LoginActivity.this,MainActivity.class));
                 return true;
             }
@@ -684,55 +670,32 @@ public class LoginActivity extends UI {
         }
     }
 
-    private void saveLoginInfo(String account, String token) {
-        Preferences.saveUserAccount(account);
-        Preferences.saveUserToken(token);
+    private void saveLoginInfo(String id, String loginPhone, String password, String localPhone) {
+        SharedPreferences.Editor editor = getSharedPreferences("LoginInfo", Context.MODE_PRIVATE).edit();
+        editor.putString("id", id);
+        editor.putString("loginPhone", loginPhone);
+        editor.putString("password", password);
+        editor.putString("localPhone", localPhone);
+        editor.commit();
     }
 
-    //    public void getPermission() {
-//        SharedPreferences sp = getSharedPreferences("LoginInfo", Context.MODE_PRIVATE);
-//        if (!sp.getBoolean("isFirst", true)) {
-//            readLoginInfo();
-//            return;
-//        }
-//        int PERMISSION_REQUEST_CODE = 1;
-//        String[] permissions = new String[2];
-//
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-//            if (checkSelfPermission(Manifest.permission.READ_SMS)
-//                    == PackageManager.PERMISSION_DENIED) {
-//                permissions[0] = Manifest.permission.READ_SMS;
-//            }
-//            if (checkSelfPermission(Manifest.permission.READ_PHONE_STATE)
-//                    == PackageManager.PERMISSION_DENIED) {
-//                permissions[1] = Manifest.permission.READ_PHONE_STATE;
-//            }
-//            requestPermissions(permissions, PERMISSION_REQUEST_CODE);
-//        }
-//
-//        SharedPreferences.Editor editor = getSharedPreferences("LoginInfo", Context.MODE_PRIVATE).edit();
-//        editor.putBoolean("isFirst", false);
-//        editor.commit();
-//    }
     private void readLoginInfo() {
         SharedPreferences sp=getSharedPreferences("LoginInfo", Context.MODE_PRIVATE);
-        String account="";
-        String token="";
+        String id = "";
+        String loginPhone = "";
+        String password = "";
         String localPhone = "";
 
         if(sp!=null) {
-            account = sp.getString("account", "");
-            token = sp.getString("token", "");
+            id = sp.getString("id", "");
+            loginPhone = sp.getString("loginPhone", "");
+            password = sp.getString("password", "");
             localPhone = sp.getString("localPhone", "");
         }
-        if (!("".equals(account) || "".equals(token))) {
-            mAccountView.setText(account);
-            mPasswordView.setText(token);
-            // TODO:自动登录
-//            if(mAuthTask==null) {
-//                mAuthTask = new UserLoginTask(account, token);
-//                mAuthTask.execute((Void) null);
-//            }
+        if (!("".equals(loginPhone) || "".equals(password))) {
+            mAccountView.setText(loginPhone);
+            mPasswordView.setText(password);
+            attemptLogin();
         } else {
             mAccountView.setText(localPhone);
         }
@@ -780,17 +743,11 @@ public class LoginActivity extends UI {
     @OnMPermissionGranted(BASIC_PERMISSION_REQUEST_CODE)
     public void onBasicPermissionSuccess() {
         SharedPreferences sp = getSharedPreferences("LoginInfo", Context.MODE_PRIVATE);
-        if (!sp.getBoolean("isFirst", true)) {
-            readLoginInfo();
-            return;
-        }
         String localPhone = getPhoneNum();
         SharedPreferences.Editor editor = getSharedPreferences("LoginInfo", Context.MODE_PRIVATE).edit();
-        mAccountView.setText(localPhone);
         editor.putString("localPhone", localPhone);
-        editor.putBoolean("isFirst", false);
         editor.commit();
-        Toast.makeText(this, "授权成功", Toast.LENGTH_SHORT).show();
+        readLoginInfo();
     }
 
     @OnMPermissionDenied(BASIC_PERMISSION_REQUEST_CODE)
@@ -798,26 +755,6 @@ public class LoginActivity extends UI {
         Toast.makeText(this, "授权失败", Toast.LENGTH_SHORT).show();
     }
 
-    //    @Override
-//    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-//        switch (requestCode) {
-//            case 1:
-//                if (grantResults[1] == PackageManager.PERMISSION_GRANTED) {
-//                    // 同意授权
-//                    String localPhone = getPhoneNum();
-//                    SharedPreferences.Editor editor = getSharedPreferences("LoginInfo", Context.MODE_PRIVATE).edit();
-//                    mAccountView.setText(localPhone);
-//                    editor.putString("localPhone", localPhone);
-//                    editor.commit();
-//                } else {
-//                    // 不同意授权
-//                    showToast("用户拒绝接受权限");
-//                }
-//                break;
-//            default:
-//                super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-//        }
-//    }
     public static void start(Context context) {
         start(context, false);
     }

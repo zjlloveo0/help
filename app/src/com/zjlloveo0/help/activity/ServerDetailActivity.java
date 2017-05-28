@@ -43,6 +43,7 @@ public class ServerDetailActivity extends Activity {
     private LinearLayout ll_others_handle;
     private Button bt_edit;
     String HOST = SYSVALUE.HOST;
+    public final static String PAR_KEY = "com.zjlloveo0.help.model.ServerUser";
     private ServerUser serverUser;
 
     Handler handler = new Handler() {
@@ -69,6 +70,18 @@ public class ServerDetailActivity extends Activity {
         dialog1.setCanceledOnTouchOutside(false);
         findView();
         initView();
+        bt_edit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ServerDetailActivity.this, AddAndModfiyActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("addOrModify", "modify");
+                bundle.putString("type", "server");
+                bundle.putParcelable(PAR_KEY, serverUser);
+                intent.putExtras(bundle);
+                startActivity(intent);
+            }
+        });
     }
 
     public void userDetail(View view) {

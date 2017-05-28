@@ -65,10 +65,11 @@
         android:id="@+id/tv_username"
         android:layout_alignBottom="@id/iv_image"
         android:textSize="16sp"
+        android:gravity="center_vertical"
         android:textColor="#000000"
         android:paddingLeft="5dp"
         android:shadowColor="@color/white"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_width="match_parent"
+        android:layout_height="30dp" />
 
 </RelativeLayout>

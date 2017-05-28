@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,6 +32,7 @@ public class UserMsgActivity extends Activity {
     private TextView tv_user_msg_num;
     private TextView tv_user_msg_point;
     private TextView tv_user_msg_phone;
+    private Button bt_user_msg_talkToHe;
     private String userID;
     private UserSchool userSchool;
     private Bitmap headImg;
@@ -61,6 +63,7 @@ public class UserMsgActivity extends Activity {
         tv_user_msg_num = (TextView) findViewById(R.id.tv_user_msg_num);
         tv_user_msg_point = (TextView) findViewById(R.id.tv_user_msg_point);
         tv_user_msg_phone = (TextView) findViewById(R.id.tv_user_msg_phone);
+        bt_user_msg_talkToHe = (Button) findViewById(R.id.bt_user_msg_talkToHe);
     }
 
     public void initView() {
@@ -81,18 +84,13 @@ public class UserMsgActivity extends Activity {
                     if (!"".equals(res) && res.startsWith("{\"code\":")) {
                         JSONObject jsonRes = new JSONObject(res);
                         int code = jsonRes.getInt("code");
-                        /**
-                         * {"id":57,"name":"米糕","phone":"13253370013","password":"11111q",
-                         * "img":"static/img/server/server_default.png","stuNum":"1","point":100,
-                         * "collegeId":1,"star":5,"isEnable":1,"updateTime":"Fri May 05 15:05:19 CST 2017",
-                         * "schoolName":"河南工业大学","collegeName":"信息科学与工程学院","createMissionNum":0,"createServerNum":4}
-                         */
                         if (code == 400) {
                             JSONArray array = jsonRes.getJSONArray("content");
                             JSONObject obj = array.getJSONObject(0);
                             String id = obj.getString("id");
                             id = ("".equals(id) || id == null) ? "0" : id;
                             String name = obj.getString("name");
+                            String schoolInfo = obj.getString("schoolInfo");
                             String phone = obj.getString("phone");
                             String password = obj.getString("password");
                             String img = obj.getString("img");
@@ -115,6 +113,7 @@ public class UserMsgActivity extends Activity {
                             userSchool = new UserSchool();
                             userSchool.setId(Integer.valueOf(id));
                             userSchool.setName(name);
+                            userSchool.setSchoolInfo(schoolInfo);
                             userSchool.setPhone(phone);
                             userSchool.setPassword(password);
                             userSchool.setImg(img);
@@ -137,10 +136,15 @@ public class UserMsgActivity extends Activity {
                                     }
                                     iv_user_msg_head.setImageBitmap(headImg);
                                     tv_user_msg_name.setText(userSchool.getName());
-                                    tv_user_msg_school.setText(userSchool.getSchoolName() + "-" + userSchool.getCollegeName());
+                                    tv_user_msg_school.setText(userSchool.getSchoolInfo());
                                     tv_user_msg_num.setText(userSchool.getStuNum());
                                     tv_user_msg_point.setText(userSchool.getPoint() + "");
                                     tv_user_msg_phone.setText(userSchool.getPhone());
+                                    if (SYSVALUE.currentUser.getId() == userSchool.getId()) {
+                                        bt_user_msg_talkToHe.setVisibility(View.GONE);
+                                    } else {
+                                        bt_user_msg_talkToHe.setVisibility(View.VISIBLE);
+                                    }
                                 }
                             });
                         } else {

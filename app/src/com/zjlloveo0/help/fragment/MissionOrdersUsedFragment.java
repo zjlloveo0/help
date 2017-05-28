@@ -115,7 +115,7 @@ public class MissionOrdersUsedFragment extends Fragment {
 
             @Override
             public void onLoadingMore() {
-                Toast.makeText(getContext(), "加载", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getContext(), "加载", Toast.LENGTH_SHORT).show();
             }
         });
         return mRootView;

@@ -78,10 +78,16 @@ public class DemoMessageReceiver extends PushMessageReceiver {
                 Message msg = Message.obtain();
                 switch (message.getDescription()) {
                     case "":
+                        msg.obj = message.getContent();
                         break;
                     case "SERVER_ORDERS_DETAIL":
                         msg.what = 1;
                         msg.arg1 = SYSVALUE.SERVER_ORDERS_DETAIL;
+                        msg.obj = message.getContent();
+                        break;
+                    case "MINE_DETAIL":
+                        msg.what = 1;
+                        msg.arg1 = SYSVALUE.MINE_DETAIL;
                         msg.obj = message.getContent();
                         break;
                 }
@@ -102,18 +108,23 @@ public class DemoMessageReceiver extends PushMessageReceiver {
         } else if (!TextUtils.isEmpty(message.getAlias())) {
             mAlias = message.getAlias();
         }
-
+        Message msg = Message.obtain();
         switch (message.getExtra().get("TARGET")) {
             case "":
+                msg.obj = message.getContent();
                 break;
             case "SERVER_ORDERS_DETAIL":
-                Message msg = Message.obtain();
                 msg.what = 0;
                 msg.arg1 = SYSVALUE.SERVER_ORDERS_DETAIL;
                 msg.obj = message.getContent();
-                InitApplication.getHandler().sendMessage(msg);
+                break;
+            case "MISSION_ORDERS_DETAIL":
+                msg.what = 0;
+                msg.arg1 = SYSVALUE.MISSION_ORDERS_DETAIL;
+                msg.obj = message.getContent();
                 break;
         }
+        InitApplication.getHandler().sendMessage(msg);
     }
 
     @Override

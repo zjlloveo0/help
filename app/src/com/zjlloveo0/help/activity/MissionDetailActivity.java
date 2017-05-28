@@ -17,6 +17,7 @@ import android.widget.Toast;
 import com.loopj.android.image.SmartImageView;
 import com.netease.nim.uikit.NimUIKit;
 import com.zjlloveo0.help.R;
+import com.zjlloveo0.help.bean.Mission;
 import com.zjlloveo0.help.fragment.MissionListFragment;
 import com.zjlloveo0.help.bean.MissionUser;
 import com.zjlloveo0.help.utils.Request2Server;
@@ -38,9 +39,12 @@ public class MissionDetailActivity extends Activity {
     private TextView tv_mission_detail_title;
     private TextView tv_mission_detail_exPoint;
     private TextView tv_mission_detail_content;
+    private LinearLayout ll_others_handle;
+    private Button bt_edit;
     String HOST = SYSVALUE.HOST;
     private StringBuffer reqeust;
     private MissionUser missionUser;
+    public final static String PAR_KEY = "com.zjlloveo0.help.model.MissionUser";
     private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -60,6 +64,18 @@ public class MissionDetailActivity extends Activity {
         setContentView(R.layout.mission_detail);
         findView();
         initView();
+        bt_edit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MissionDetailActivity.this, AddAndModfiyActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("addOrModify", "modify");
+                bundle.putString("type", "mission");
+                bundle.putParcelable(PAR_KEY, missionUser);
+                intent.putExtras(bundle);
+                startActivity(intent);
+            }
+        });
     }
 
     public void receiverUserDetail(View view) {
@@ -88,7 +104,6 @@ public class MissionDetailActivity extends Activity {
         reqeust.append("&receiverId=" + SYSVALUE.currentUser.getId());
         reqeust.append("&state=1");
         dialogMsg("注意", "确定要完成这个任务吗?");
-
     }
 
     private void dialogMsg(String title, String msg) {
@@ -171,6 +186,13 @@ public class MissionDetailActivity extends Activity {
         tv_mission_detail_title.setText(missionUser.getTitle());
         tv_mission_detail_exPoint.setText("奖励" + missionUser.getExchangePoint() + "积分");
         tv_mission_detail_content.setText(missionUser.getContent());
+        if (SYSVALUE.currentUser.getId() == missionUser.getCreaterId()) {
+            bt_edit.setVisibility(View.VISIBLE);
+            ll_others_handle.setVisibility(View.GONE);
+        } else {
+            bt_edit.setVisibility(View.GONE);
+            ll_others_handle.setVisibility(View.VISIBLE);
+        }
     }
 
     public void findView() {
@@ -185,6 +207,8 @@ public class MissionDetailActivity extends Activity {
         tv_mission_detail_title = (TextView) findViewById(R.id.tv_mission_detail_title);
         tv_mission_detail_exPoint = (TextView) findViewById(R.id.tv_mission_detail_exPoint);
         tv_mission_detail_content = (TextView) findViewById(R.id.tv_mission_detail_content);
+        ll_others_handle = (LinearLayout) findViewById(R.id.ll_others_handle);
+        bt_edit = (Button) findViewById(R.id.bt_edit);
     }
 
     public void back(View v) {

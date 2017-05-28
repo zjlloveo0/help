@@ -14,19 +14,30 @@ public class DemoCache {
 
     private static String account;
 
+    private static String headImg;
+
     private static StatusBarNotificationConfig notificationConfig;
 
     public static void clear() {
         account = null;
+        headImg = null;
     }
 
     public static String getAccount() {
         return account;
     }
 
+    public static String getHeadImg() {
+        return account;
+    }
+
     public static void setAccount(String account) {
         DemoCache.account = account;
         NimUIKit.setAccount(account);
+    }
+
+    public static void setHeadImg(String headImg) {
+        DemoCache.headImg = headImg;
     }
 
     public static void setNotificationConfig(StatusBarNotificationConfig notificationConfig) {

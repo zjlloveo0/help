@@ -103,20 +103,20 @@ public class ServerOrdersDetailActivity extends Activity implements View.OnClick
         new Thread(new Runnable() {
             @Override
             public void run() {
-                if (ordersDetail.getCreateUser().getImg() != null && "".equals(ordersDetail.getCreateUser().getImg()) && "null".equals(ordersDetail.getCreateUser().getImg())) {
+                if (ordersDetail.getCreateUser().getImg() != null && !"".equals(ordersDetail.getCreateUser().getImg()) && !"null".equals(ordersDetail.getCreateUser().getImg())) {
                     bitmap = Request2Server.getBitMapFromUrl(HOST + ordersDetail.getCreateUser().getImg());
                 }
-                if (ordersDetail.getOfUser().getImg() != null && "".equals(ordersDetail.getOfUser().getImg()) && "null".equals(ordersDetail.getOfUser().getImg())) {
+                if (ordersDetail.getOfUser().getImg() != null && !"".equals(ordersDetail.getOfUser().getImg()) && !"null".equals(ordersDetail.getOfUser().getImg())) {
                     bitmap2 = Request2Server.getBitMapFromUrl(HOST + ordersDetail.getOfUser().getImg());
                 }
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        if (bitmap != null) {
-                            iv_detail_create_head.setImageBitmap(bitmap);
-                        }
                         if (bitmap2 != null) {
-                            iv_detail_use_head.setImageBitmap(bitmap2);
+                            iv_detail_create_head.setImageBitmap(bitmap2);
+                        }
+                        if (bitmap != null) {
+                            iv_detail_use_head.setImageBitmap(bitmap);
                         }
                     }
                 });
@@ -503,7 +503,7 @@ public class ServerOrdersDetailActivity extends Activity implements View.OnClick
     public void createUserDetail(View view) {
         Intent intent = new Intent(getApplicationContext(), UserMsgActivity.class);
         Bundle bundle = new Bundle();
-        bundle.putString("userID", ordersDetail.getCreateId() + "");
+        bundle.putString("userID", ordersDetail.getUId() + "");
         intent.putExtras(bundle);
         startActivity(intent);
     }

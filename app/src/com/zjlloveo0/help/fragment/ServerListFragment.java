@@ -1,6 +1,7 @@
 package com.zjlloveo0.help.fragment;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
@@ -115,7 +116,7 @@ public class ServerListFragment extends Fragment {
 
             @Override
             public void onLoadingMore() {
-                Toast.makeText(getContext(), "加载", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getContext(), "加载", Toast.LENGTH_SHORT).show();
             }
         });
         return mRootView;
@@ -166,6 +167,7 @@ public class ServerListFragment extends Fragment {
             } else {
                 holder = (ViewHolder) convertView.getTag();
             }
+            holder.tv_username.setBackgroundColor(Color.argb(144, 144, 144, 144));
             holder.serverUser = serverUserList.get(position);
             holder.iv_image.setImageUrl(HOST + serverUserList.get(position).getImg());
             holder.tv_username.setText(serverUserList.get(position).getCreaterName());

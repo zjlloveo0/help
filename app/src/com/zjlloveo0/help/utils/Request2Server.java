@@ -21,6 +21,7 @@ import java.util.concurrent.TimeUnit;
 
 import okhttp3.Call;
 import okhttp3.Callback;
+import okhttp3.FormBody;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
@@ -34,7 +35,6 @@ import static java.lang.String.valueOf;
  * Created by zjlloveo0 on 20.
  */
 public class Request2Server {
-    public static String res = "";
     public static String getRequsetResult(String u) {
         String s = "";
         try {
@@ -151,7 +151,6 @@ public class Request2Server {
     }
 
     public static void uploadFile(File file, String url, Map<String, Object> map, Callback mCallback) {
-        res = "";
         OkHttpClient client = new OkHttpClient();
         MultipartBody.Builder requestBody = new MultipartBody.Builder().setType(MultipartBody.FORM);
         if (file != null) {
@@ -166,6 +165,19 @@ public class Request2Server {
             }
         }
         Request request = new Request.Builder().url(url).post(requestBody.build()).tag(null).build();
+        // readTimeout("请求超时时间" , 时间单位);
+        client.newBuilder().readTimeout(60000, TimeUnit.MILLISECONDS).build().newCall(request).enqueue(mCallback);
+    }
+
+    public static void request(String url, Map<String, Object> map, Callback mCallback) {
+        OkHttpClient client = new OkHttpClient();
+        FormBody.Builder formBody = new FormBody.Builder();
+        if (map != null) {
+            for (Map.Entry entry : map.entrySet()) {
+                formBody.add(valueOf(entry.getKey()), valueOf(entry.getValue()));
+            }
+        }
+        Request request = new Request.Builder().url(url).post(formBody.build()).tag(null).build();
         // readTimeout("请求超时时间" , 时间单位);
         client.newBuilder().readTimeout(60000, TimeUnit.MILLISECONDS).build().newCall(request).enqueue(mCallback);
     }

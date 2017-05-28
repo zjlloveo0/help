@@ -14,6 +14,8 @@ public class SYSVALUE {
     // 此TAG在adb logcat中检索自己所需要的信息， 只需在命令行终端输入 adb logcat | grep
     public final static String TAG = "com.zjlloveo0.help";
     public final static int SERVER_ORDERS_DETAIL = 1001;
+    public final static int MISSION_ORDERS_DETAIL = 1002;
+    public final static int MINE_DETAIL = 1003;
 
     //时间格式化
     public final static String SDF = "yyyy/MM/dd-HH:mm:ss";

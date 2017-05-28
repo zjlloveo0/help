@@ -10,7 +10,6 @@ import android.os.Handler;
 import android.os.Message;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -18,7 +17,6 @@ import android.widget.Toast;
 import com.loopj.android.image.SmartImageView;
 import com.zjlloveo0.help.R;
 import com.zjlloveo0.help.bean.MissionUser;
-import com.zjlloveo0.help.bean.UserSchool;
 import com.zjlloveo0.help.utils.InitApplication;
 import com.zjlloveo0.help.utils.Request2Server;
 import com.zjlloveo0.help.utils.SYSVALUE;
@@ -33,6 +31,8 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MissionOrdersDetailActivity extends Activity implements View.OnClickListener {
     private SmartImageView iv_detail_image;
+
+    private LinearLayout ll_finish_time;
 
     private LinearLayout ll_create;
     private CircleImageView iv_detail_create_head;
@@ -94,10 +94,10 @@ public class MissionOrdersDetailActivity extends Activity implements View.OnClic
         new Thread(new Runnable() {
             @Override
             public void run() {
-                if (missionUser.getCreaterImg() != null && "".equals(missionUser.getCreaterImg()) && "null".equals(missionUser.getCreaterImg())) {
+                if (missionUser.getCreaterImg() != null && !"".equals(missionUser.getCreaterImg()) && !"null".equals(missionUser.getCreaterImg())) {
                     bitmap = Request2Server.getBitMapFromUrl(HOST + missionUser.getCreaterImg());
                 }
-                if (missionUser.getReceiverImg() != null && "".equals(missionUser.getReceiverImg()) && "null".equals(missionUser.getReceiverImg())) {
+                if (missionUser.getReceiverImg() != null && !"".equals(missionUser.getReceiverImg()) && !"null".equals(missionUser.getReceiverImg())) {
                     bitmap2 = Request2Server.getBitMapFromUrl(HOST + missionUser.getReceiverImg());
                 }
                 runOnUiThread(new Runnable() {
@@ -128,6 +128,12 @@ public class MissionOrdersDetailActivity extends Activity implements View.OnClic
             tv_detail_use_name.setText(missionUser.getReceiverName());
             tv_detail_use_point.setText((missionUser.getReceiverPoint() == null ? 0 : missionUser.getReceiverPoint()) + "分");
             setButtonState(true, missionUser.getState());
+        }
+        if (missionUser.getReceiverId() == null || missionUser.getReceiverId() == 0) {
+            ll_used.setVisibility(View.GONE);
+        }
+        if (missionUser.getFinishTime() == null) {
+            ll_finish_time.setVisibility(View.GONE);
         }
         tv_order_id.setText(missionUser.getId() + "");
         tv_order_point.setText((missionUser.getExchangePoint() == null ? 0 : missionUser.getExchangePoint()) + "分");
@@ -305,6 +311,8 @@ public class MissionOrdersDetailActivity extends Activity implements View.OnClic
 
     public void findView() {
         iv_detail_image = (SmartImageView) findViewById(R.id.iv_detail_image);
+
+        ll_finish_time = (LinearLayout) findViewById(R.id.ll_finish_time);
 
         ll_create = (LinearLayout) findViewById(R.id.ll_create);
         iv_detail_create_head = (CircleImageView) findViewById(R.id.iv_detail_create_head);
